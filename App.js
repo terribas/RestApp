@@ -5,7 +5,7 @@
  * @format
  * @flow strict-local
  */
-
+// asdf comentario by gabri
 import React from 'react';
 import {
   SafeAreaView,
