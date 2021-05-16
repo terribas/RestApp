@@ -1,40 +1,48 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
 
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
 import {Input} from 'react-native-elements';
 
+Icon.loadFont();
 
 export default function Inputs(props) {
-
-    const [isFocused, setIsFocused] = useState(false);
-
-    onFocusChange = () => {
-        setIsFocused(true);
-    }
-
-
+   
     return (
-        <View style={[styles.inputContainer, {borderColor: isFocused ? '#0779ef' : '#eee'}]}>
-            <Input
-                placeholder={props?.placeholder}
-                onfocus={onFocusChange}
-                inputContainerStyle={styles.inputContainer}
-                inputStyle={styles.inputText}
-                secureTextEntry={props?.secureTextEntry}
-                leftIcon={
-                    <Icon
-                        name={props?.icon}
-                        size={22}
-                        color={isFocused ? '#007e94' : 'grey'}
-                    />
-                }
-            />
-
-        </View>
+        <Input
+            containerStyle={{ width: props.width ?? '90%' }}
+            inputContainerStyle={{ borderBottomColor: props.color ?? '#60BBDB' }}
+            leftIcon={<Icon name={props.leftIcon} size={20} color={props.color ?? '#60BBDB'}/>}
+            leftIconContainerStyle={{ marginRight: 5 }}
+            rightIcon={props.rightIcon && <Icon name={props.rightIcon} size={20} color={props.color ?? '#60BBDB'} onPress={()=>{props.onChangeText('')}}/>}
+            placeholder={props.placeholder}
+            value={props.value}
+            secureTextEntry={props.isPassword ?? false}
+            keyboardType={props.keyboardType ?? 'default'}
+            onChangeText={props.onChangeText}
+        />
 
     );
 }
+
+
+
+/*
+    <Inputs
+        containerStyle={{ width: "90%" }}
+        inputContainerStyle={{ borderBottomColor: '#60BBDB' }}
+        leftIcon={<Icon name="mail-outline" size={20} color='#60BBDB'/>}
+        leftIconContainerStyle={{ marginRight: 5 }}
+        rightIcon={<Icon name="close" size={20} backgroundColor='white' color='#60BBDB' onPress={()=>{setText('')}}/>}
+        placeholder="Email"
+        value={text}
+        secureTextEntry={true}
+        keyboardType='default'
+        onChangeText={setText}
+    />
+
+*/
 
 const styles = StyleSheet.create({
     container: {
