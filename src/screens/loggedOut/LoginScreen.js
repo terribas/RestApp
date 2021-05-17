@@ -19,8 +19,13 @@ export default function LoginScreen({navigation, route}) {
     const {clientLogin, waiterLogin} = useAuthContext();
 
 
+
     /*function handleOnLoginPress() {
         if (email === 'client') {
+
+    function handleOnLoginPress() {
+        if (email === 'client' || email === 'Client')  {
+
             clientLogin('token del cliente');
         } else {
             waiterLogin('token del camarero');
