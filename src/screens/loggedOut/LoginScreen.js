@@ -20,7 +20,7 @@ export default function LoginScreen({navigation, route}) {
 
 
     function handleOnLoginPress() {
-        if (email === 'client') {
+        if (email === 'client' || email === 'Client')  {
             clientLogin('token del cliente');
         } else {
             waiterLogin('token del camarero');
