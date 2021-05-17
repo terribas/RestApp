@@ -16,7 +16,7 @@ export default function SwitchAuthScreens(props) {
         return (
             <SafeAreaView>
                 <Text>Cargando...</Text>
-                <Button onPress={logOut} title="Cerrar sesión" />
+                
             </SafeAreaView>
         );
     } else if (loggedState === CLIENT_LOGGED_IN){
