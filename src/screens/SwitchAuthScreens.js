@@ -16,6 +16,7 @@ export default function SwitchAuthScreens(props) {
         return (
             <SafeAreaView>
                 <Text>Cargando...</Text>
+
             </SafeAreaView>
         );
     } else if (loggedState === CLIENT_LOGGED_IN){

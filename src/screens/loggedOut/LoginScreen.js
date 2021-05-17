@@ -19,15 +19,20 @@ export default function LoginScreen({navigation, route}) {
     const {clientLogin, waiterLogin} = useAuthContext();
 
 
+
+    /*function handleOnLoginPress() {
+        if (email === 'client') {
+
     function handleOnLoginPress() {
         if (email === 'client' || email === 'Client')  {
+
             clientLogin('token del cliente');
         } else {
             waiterLogin('token del camarero');
         }
-    }
+    } */
 
-    /*  Se conecta al servidor.
+    //  Se conecta al servidor.
     async function handleOnLoginPress() {
 
         const postData = {email, password};
@@ -59,7 +64,7 @@ export default function LoginScreen({navigation, route}) {
             Alert.alert('Hubo un problema al iniciar sesión.\n\nInténtalo de nuevo más tarde.');
         }
     }
-    */
+    
 
 
     function handleOnRegisterPress() {
