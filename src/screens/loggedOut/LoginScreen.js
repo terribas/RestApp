@@ -4,8 +4,8 @@ import {Text, StyleSheet, View, SafeAreaView, Image, ScrollView, Alert} from 're
 import {REGISTER} from 'src/consts/screens';
 
 import Inputs from 'src/components/Inputs';
-
-import {Button} from 'react-native-elements';
+import Buttons from 'src/components/Buttons';
+import Texts from 'src/components/Texts';
 
 import {API_URL} from 'src/consts/server';
 
@@ -52,9 +52,9 @@ export default function LoginScreen({navigation, route}) {
             if (!response.ok) {
                 Alert.alert('Usuario o contraseña incorrectos');
             } else {
-                const {token, isWaiter} = await response.json();
+                const {token, role} = await response.json();
                 
-                if (isWaiter) {
+                if (role === 'waiter') {
                     waiterLogin(token);
                 } else {
                     clientLogin(token);
@@ -82,8 +82,8 @@ export default function LoginScreen({navigation, route}) {
                     resizeMode='center'
                     style={styles.image}/>
 
-                <Text style={styles.textTitle}>Bienvenido</Text>
-                <Text style={styles.textBody}>Inicia sesión con tu cuenta</Text>
+                <Texts h1 semibold center>Bienvenido</Texts>
+                <Texts h4 center>Inicia sesión con tu cuenta</Texts>
 
                 <View style={{marginTop: 20}} />
 
@@ -107,22 +107,25 @@ export default function LoginScreen({navigation, route}) {
 
                 <View style={{marginTop: 25}} />
 
+                <View style={styles.buttonsContainer}>
+                    <Buttons
+                        title="Iniciar sesión"
+                        onPress={handleOnLoginPress}
+                    />
 
-                <Button
-                    title="Iniciar sesión"
-                    containerStyle={styles.buttons}
-                    onPress={handleOnLoginPress}
-                />
+                    <View style={{marginTop: 15}} />
 
-                <View style={{marginTop: 10}} />
+                    
+                    <Texts h5 center>¿No tienes cuenta?</Texts>
 
-                <Button
-                    title="Regístrate"
-                    containerStyle={styles.buttons}
-                    type='outline'
-                    onPress={handleOnRegisterPress}
-                />
+                    <View style={{marginTop: 5}} />
 
+                    <Buttons
+                        title="Regístrate"
+                        type='outline'
+                        onPress={handleOnRegisterPress}
+                    />
+                </View>
             </View>
         </ScrollView>
         
@@ -141,7 +144,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
 
-    buttons: {
+    buttonsContainer: {
         width: '90%'
     },
 

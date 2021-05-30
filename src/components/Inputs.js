@@ -12,15 +12,18 @@ export default function Inputs(props) {
     return (
         <Input
             containerStyle={{ width: props.width ?? '90%' }}
-            inputContainerStyle={{ borderBottomColor: props.color ?? '#60BBDB' }}
-            leftIcon={<Icon name={props.leftIcon} size={20} color={props.color ?? '#60BBDB'}/>}
+            inputStyle={{fontFamily: 'Montserrat-Regular'}}
+            inputContainerStyle={{ borderBottomColor: props.color ?? '#741922' }}
+            leftIcon={<Icon name={props.leftIcon} size={20} color={props.color ?? '#741922'}/>}
             leftIconContainerStyle={{ marginRight: 5 }}
-            rightIcon={props.rightIcon && <Icon name={props.rightIcon} size={20} color={props.color ?? '#60BBDB'} onPress={()=>{props.onChangeText('')}}/>}
+            rightIcon={props.rightIcon && <Icon name={props.rightIcon} size={20} color={props.color ?? '#741922'} onPress={()=>{props.onChangeText('')}}/>}
             placeholder={props.placeholder}
             value={props.value}
             secureTextEntry={props.isPassword ?? false}
             keyboardType={props.keyboardType ?? 'default'}
             onChangeText={props.onChangeText}
+            label={props.label}
+            labelStyle={{fontFamily: 'Montserrat-Regular'}}
         />
 
     );

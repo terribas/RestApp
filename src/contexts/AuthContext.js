@@ -12,7 +12,7 @@ export const LOADING = 'LOADING';
 
 
 const APP_LOGGED_KEY = 'restapp.logged_key';
-const AUTH_TOKEN_KEY = 'restapp.auth_token';
+export const AUTH_TOKEN_KEY = 'restapp.auth_token';
 
 
 const CLIENT_LOGIN = 'CLIENT_LOGIN';
@@ -50,8 +50,9 @@ function tokenStateReducer(currentState, action) {
 
 
 export function AuthContextProvider({children}) {
-    const [authState, authDispatch] = useReducer(authStateReducer, LOADING);
     const [tokenState, tokenDispatch] = useReducer(tokenStateReducer, '');
+    const [authState, authDispatch] = useReducer(authStateReducer, LOADING);
+    
 
     const clientLogin = useCallback((authToken) => {
         storage.set(APP_LOGGED_KEY, CLIENT_LOGGED_IN);
@@ -68,7 +69,6 @@ export function AuthContextProvider({children}) {
     }, []);
 
     const logOut = useCallback(() => {
-        
         storage.set(APP_LOGGED_KEY, LOGGED_OUT);
         storage.set(AUTH_TOKEN_KEY, '');
         authDispatch({type: LOGOUT});

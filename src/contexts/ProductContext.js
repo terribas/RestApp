@@ -9,7 +9,7 @@ const GET_PRODUCTS = 'GET_PRODUCTS';
 
 
 async function fetchData() {
-    const response = await fetch(`${API_URL}/product`);
+    const response = await fetch(`${API_URL}/product`, {method: 'POST'});
     const json = await response.json();
     return json;
 }

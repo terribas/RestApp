@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
-import {View, Text, Button, FlatList, StyleSheet} from 'react-native';
-import {CLIENT_CONFIRM_ORDER} from 'src/consts/screens';
+import React, {useState, useEffect, useLayoutEffect} from 'react';
+import {View, Text, Button, FlatList, StyleSheet, Alert} from 'react-native';
+import {CLIENT_WELCOME, CLIENT_CONFIRM_ORDER} from 'src/consts/screens';
 import {API_URL} from 'src/consts/server';
 import useProductContext from 'src/hooks/useProductContext';
 import {Chip} from 'react-native-elements';
@@ -8,22 +8,60 @@ import {Chip} from 'react-native-elements';
 import ClientProductListItem from 'src/components/items/client/ClientProductListItem';
 import ClientCategoryListItem from 'src/components/items/client/ClientCategoryListItem'
 
+import Buttons from 'src/components/Buttons';
+
+
 
 export default function ProductsScreen({navigation, route}) {
+
+    const {table} = route.params;
 
     //const [products, setProducts] = useState([]);
     const {isSuccess, isLoading, products} = useProductContext();
     const [categories, setCategories] = useState(['']);
     const [selectedCategory, setSelectedCategory] = useState('');
-    const [cart, setCart] = useState([]);
+    const [cart, setCart] = useState([0]);
+
+
+    const totalAmount = parseInt(cart.reduce((sum, product) => ((product.amount ?? 0) + sum), 0));
+    const totalPrice = parseFloat(cart.reduce((sum, product) => ((product.price ?? 0) * (product.amount ?? 0) + sum), 0));
+
+
+    function handleCancelOrder() {
+        Alert.alert('Cancelar pedido', '¿Seguro que quieres cancelar el pedido?', [
+            {
+                text: 'Seguir pidiendo',
+                style: 'cancel'
+            },
+            {
+                text: 'Cancelar',
+                onPress: () => {navigation.navigate(CLIENT_WELCOME)}
+                
+            }
+        ])
+    }
+
+
+    useLayoutEffect(function() {
+        navigation.setOptions({
+            headerLeft: () => (
+                <Button
+                    color='#741922'
+                    onPress={handleCancelOrder}
+                    title="Cancelar"
+                />
+            )
+        })
+    });
 
     
-
     useEffect(function() {
+        setCart([]);
         if (isSuccess) {
             const cats = [];
             products.forEach(product => {
-                if (!cats.some(cat => cat.id === product.category.id)) {
+                product.amount = 0;
+                if (!cats.some(cat => cat === product.category)) {
                     cats.push(product.category);
                 }
             });
@@ -32,14 +70,12 @@ export default function ProductsScreen({navigation, route}) {
             setCart(productsCopy);
             
             setCategories(cats);
-            setSelectedCategory(cats[0].id);
+            setSelectedCategory(cats[0]);
         }
     }, []);
 
 
     function setProductInCart(id, amount) {
-        console.log('he entrado en setproduct');
-
         const cartCopy = [...cart];
         for (var i in cartCopy) {
             if (cartCopy[i].id === id) {
@@ -47,83 +83,40 @@ export default function ProductsScreen({navigation, route}) {
                 break;
             }
         }
-        
-        console.log(cartCopy);
         setCart(cartCopy);
-
-        console.log('El cart es ' + JSON.stringify(cart));
     }
 
-    
-    function getCurrentAmount(id) {
-        //console.log('id recibido ' + id);
-        console.log('he entrado en getCurrentAmount');
 
-        
-        cart.forEach(product => {
-            //console.log('tengo ' + product.id + ' y como parametro ' + id);
-            if (product.id === id) {
-                console.log("si coincide");
-                console.log('El amount de funcion es ' + product.amount );
+    function handleOnConfirmPress() {
+        const cartCopy = [...cart];
 
-                return product.amount ?? 0;
-            } else {
-                console.log(product.id + ' no coincide con ' + id);
-            }
+        const cleanCart = cartCopy.filter(product => (product.amount > 0));
+
+        console.log('carrito limpio ' + JSON.stringify(cleanCart));
+
+        navigation.navigate(CLIENT_CONFIRM_ORDER, {
+            table: table,
+            cart: cleanCart,
+            total: totalPrice
         });
-
-        return 0;
-        
-        /*
-        for (var i in cart){
-            if (cart[i])
-        }*/
     }
 
-    /*
-    useEffect(function() {
-        async function fetchData() {
-            const response = await fetch(`${API_URL}/product`);
-            const json = await response.json();
-            setProducts(json);
 
-            const cats = [];
-            json.forEach(product => {
-                if (!cats.some(cat => cat.id === product.category.id)) {
-                    console.log('categoria' + product.category.id + product.category.name + 'no estaba')
-                    cats.push(product.category);
-                }
-            });
-            
-            setCategories(cats);
-            setSelectedCategory(cats[0].id);
-
-            console.log(products);
-            console.log(categories);
-        }
-        fetchData();
-    }, []);
-    */
     
-
-    function handleOnPress() {
-        navigation.navigate(CLIENT_CONFIRM_ORDER);
-    }
-
     return (
         <View style={styles.container}>
             <View style={styles.categories} >
                 <FlatList
                     data={categories}
                     renderItem={({item}) => (
-                        
                         <ClientCategoryListItem
                             category={item}
-                            onPress={() => {setSelectedCategory(item.id)}}
-                            type={selectedCategory === item.id ? 'solid' : 'outline'}
+                            key={item.id}
+                            onPress={() => {setSelectedCategory(item)}}
+                            mode={selectedCategory === item ? 'flat' : 'outlined'}
                         />
                     )}
-                    keyExtractor={item => item.id}
+                    keyExtractor={item => item.name}
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
                 />
@@ -131,22 +124,15 @@ export default function ProductsScreen({navigation, route}) {
 
             <View style={styles.products}>
                 <FlatList
-                    data={products?.filter(product => (product.category.id === selectedCategory))}
-                    renderItem={({item, index}) => {
-                        //if (item.category.id === selectedCategory) {
-                            return (
-                                <ClientProductListItem
-                                    product={item}
-                                    key={item.id}
-                                    amount={() => getCurrentAmount(item.id)}
-                                    onAmountChanged={(amount) => {setProductInCart(item.id, amount)}}
-                                />
-                            );
-                        //} else {
-                        //    return null;
-                        //}
-                        
-                    }}
+                    data={products?.filter(product => (product.category === selectedCategory))}
+                    renderItem={({item, index}) => (
+                        <ClientProductListItem
+                            product={item}
+                            key={item.id}
+                            amount={cart.find(product => product.id === item.id).amount ?? 0}
+                            onAmountChanged={(amount) => {setProductInCart(item.id, amount)}}
+                        />
+                    )}
                     keyExtractor={item => item.id}
                     style={styles.products}
                     
@@ -155,16 +141,20 @@ export default function ProductsScreen({navigation, route}) {
             </View>
 
             <View style={styles.bottomContainer}>
-                <Chip title="Precio" onPress={() => {
-                    console.log(cart);
-                    console.log('Patatas bravas ' + getCurrentAmount("60993ede4f1e893f310cfc70"));
-                }} />
+                <Buttons
+                    title={totalAmount == 0 ? 'Añade productos a tu pedido' : `${totalAmount} Producto${totalAmount > 1 ? 's' : ''} - ${totalPrice.toFixed(2)} €`}
+                    onPress={handleOnConfirmPress}
+                    disabled={totalAmount == 0}
+                />
             </View>
-
-            {/*<Button onPress={handleOnPress} title="Siguiente pantalla" />*/}
 
         </View>
     );
+    
+
+
+
+    
 }
 
 const styles = StyleSheet.create({
@@ -181,11 +171,14 @@ const styles = StyleSheet.create({
         //marginTop: 10,
         flex: 12,
         marginBottom: 8,
-        backgroundColor: 'red',
+        //backgroundColor: 'red',
         
     },
     bottomContainer: {
-        flex: 1
-        //justifyContent: 'flex-end'
+        flex: 1,
+        paddingLeft: 8,
+        paddingRight: 8,
+        //backgroundColor: 'red',
+        justifyContent: 'center',
     }
 });

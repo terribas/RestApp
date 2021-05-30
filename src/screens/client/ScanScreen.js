@@ -1,38 +1,47 @@
 import React from 'react';
-import {View, Text, Button} from 'react-native';
+import {View, Text, Button, StyleSheet} from 'react-native';
 import {CLIENT_PRODUCTS} from 'src/consts/screens';
 
 import QRCodeScanner from 'react-native-qrcode-scanner';
 
 
+import Texts from 'src/components/Texts';
+
+
 export default function ScanScreen({navigation, route}) {
 
     function handleOnPress() {
-        navigation.navigate(CLIENT_PRODUCTS);
+        navigation.navigate(CLIENT_PRODUCTS, {
+            table: '60a53cdb89603c02b4d1627f'
+        });
     }
 
-    function onSuccess (e) {
+    function onRead(code) {
         console.log("Datos del qr: "+e.data);
         navigation.navigate(CLIENT_PRODUCTS,{
-            qrdata: e.data,
-        }
-        );
-        
+            table: code.data,
+        });
     };
     return (
-        <View>
-            <Text>ScanScreen</Text>
-            <Button onPress={handleOnPress} title="Siguiente pantalla" />
+        <View style={styles.container}>
+
             <QRCodeScanner
-            topContent={<Text>Texto arriba</Text>}
-            bottomContent={<Text>Texto arriba</Text>}
-            onRead={onSuccess}
-            reactivateTimeout={5000}
-            reactivate={true}   
+                topContent={<Texts h3 center bold>Escanea el código QR de tu mesa</Texts>}
+                onRead={onRead}
+                reactivateTimeout={5000}
+                reactivate={true}   
             />
         
-
+            <Button onPress={handleOnPress} title="Siguiente pantalla" />
         </View>
     );
 
 }
+
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: 'white'
+    }
+})

@@ -1,10 +1,29 @@
-import React, {useEffect} from 'react';
-import {Chip} from 'react-native-elements';
+import React from 'react';
+import {Chip} from 'react-native-paper';
 
 
-export default function ClientCategoryListItem({category, type, onPress}) {
+export default function WaiterCategoryListItem({category, mode, onPress}) {
 
     return (
-        <Chip title={category?.name ?? 'Categoría'} onPress={onPress} type={type ?? 'outline'} style={{marginLeft: 10, marginRight: 5}}/>
+        <Chip
+            onPress={onPress}
+            mode={mode}
+            style={{
+                backgroundColor: mode == 'flat' ? '#741922' : 'white',
+                borderWidth: 1.5,
+                marginLeft: 10,
+                alignItems: 'center',
+                borderColor: '#741922',
+                height: '90%'
+            }}
+            textStyle={{
+                color: mode == 'flat' ? 'white' : '#741922',
+                fontFamily: 'Montserrat-Regular',
+                //fontSize: 15
+            }}
+            >
+            {category}
+            </Chip>
     );
+    
 }

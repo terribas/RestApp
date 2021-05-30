@@ -2,7 +2,7 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {AuthContextProvider} from 'src/contexts/AuthContext';
 
-
+// #741922
 //import { SafeAreaProvider } from 'react-native-safe-area-context';
 // <SafeAreaProvider>
 
