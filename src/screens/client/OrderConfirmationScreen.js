@@ -21,7 +21,7 @@ export default function OrderConfirmationScreen({navigation, route}) {
     var lastCategory = '';
     var component;
 
-    function handleOnPress() {
+    function handleOnPress() {  
         navigation.navigate(CLIENT_PAYMENT, {
             table: table,
             cart: cart,

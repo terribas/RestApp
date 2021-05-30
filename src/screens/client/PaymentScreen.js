@@ -1,18 +1,50 @@
-import React, {useState} from 'react';
-import {View, Text, StyleSheet, Alert} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {View, Text, StyleSheet, Button} from 'react-native';
 import {CreditCardInput} from 'react-native-credit-card-input';
+import {CheckBox} from 'react-native-elements'
 import Buttons from 'src/components/Buttons';
+import apiAuthFetch from 'src/services/apiAuthFetch';
 
 
 export default function PaymentScreen({navigation, route}) {
     
     const {cart, total, table} = route.params;
     const [cardInput, setCardInput] = useState({});
+    const [isSelected, setIsSelected] = useState(false);
+
+    const [card, setCard] = useState({});
+    
+    async function get_cards() {
+        const options = {
+          method: 'POST',
+          body: JSON.stringify({
+          })
+        }
+        const response = await apiAuthFetch("/payment/getCard", options)
+        
+        const json = await response.json()
+        console.log(json)
+        if (json.tarjeta){
+          console.log("entro en if")
+          setCard(json)
+        }
+    }
+
+    useEffect( () =>{
+        get_cards()}, [] );
 
     function handleOnPayPress() {
         console.log('hola');
     }
-
+    if (card.tarjeta){
+        return(
+        <View>
+            <Text>Esta a punto de pagar {total.toFixed(2)}€ con su tarjeta acabada en {card.paymentMethods.data[0].card.last4} ¿Desea confirmar su pedido?</Text>
+            <Button title="ACEPTAR"></Button>
+            <Button title="CANCELAR"></Button>
+        </View>
+        )
+    } else{
     return (
         <View style={styles.container}>
             <View style={{marginTop: 20}} />
@@ -42,13 +74,17 @@ export default function PaymentScreen({navigation, route}) {
                 onChange={setCardInput}
             />
             <View style={{marginTop: 70}} />
-
+                <CheckBox
+                    checked={isSelected}
+                    onPress={() => {setIsSelected(!isSelected)} }
+                    title="¿Quieres guardar tu tarjeta para futuros pagos?"
+                    />   
             <View style={styles.buttonContainer}>
                 <Buttons title="PAGAR" onPress={handleOnPayPress} disabled={!cardInput?.valid}/>
             </View>
         </View>
-    );
-
+        );
+    }
 }
 
 const styles = StyleSheet.create({

@@ -34,7 +34,7 @@ export default function ClientProductListItem({product, amount, onAmountChanged}
                             onDecrease={onAmountChanged}
                             editable={false}
                             style={styles.numberInput}
-                            height={30}
+                            height={35}
                             color='#741922'
                         />
                     </View>
@@ -61,15 +61,15 @@ const styles = StyleSheet.create({
         borderColor: '#DCDCDC',
 
 
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 1,
-        },
-        shadowOpacity: 0.22,
-        shadowRadius: 2.22,
+        //shadowColor: "#000",
+        //shadowOffset: {
+        //    width: 0,
+        //    height: 1,
+        //},
+        //shadowOpacity: 0.22,
+        //shadowRadius: 2.22,
 
-        elevation: 3
+        //elevation: 3
     },
 
     imageContainer: {
