@@ -14,7 +14,8 @@ export default function WaiterCategoryListItem({category, mode, onPress}) {
                 marginLeft: 10,
                 alignItems: 'center',
                 borderColor: '#741922',
-                height: '90%'
+                height: '90%',
+                borderRadius: 4
             }}
             textStyle={{
                 color: mode == 'flat' ? 'white' : '#741922',

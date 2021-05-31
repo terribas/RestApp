@@ -1,9 +1,10 @@
 import React, {useState, useEffect, useLayoutEffect} from 'react';
-import {View, Text, Button, FlatList, StyleSheet, Alert} from 'react-native';
+import {View, Text, Button, FlatList, StyleSheet, Alert, TouchableHighlight} from 'react-native';
 import {CLIENT_WELCOME, CLIENT_CONFIRM_ORDER} from 'src/consts/screens';
 import {API_URL} from 'src/consts/server';
 import useProductContext from 'src/hooks/useProductContext';
 import {Chip} from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import ClientProductListItem from 'src/components/items/client/ClientProductListItem';
 import ClientCategoryListItem from 'src/components/items/client/ClientCategoryListItem'
@@ -34,7 +35,7 @@ export default function ProductsScreen({navigation, route}) {
                 style: 'cancel'
             },
             {
-                text: 'Cancelar',
+                text: 'Cancelar pedido',
                 onPress: () => {navigation.navigate(CLIENT_WELCOME)}
                 
             }
@@ -45,11 +46,10 @@ export default function ProductsScreen({navigation, route}) {
     useLayoutEffect(function() {
         navigation.setOptions({
             headerLeft: () => (
-                <Button
-                    color='#741922'
-                    onPress={handleCancelOrder}
-                    title="Cancelar"
-                />
+                <TouchableHighlight
+                    onPress={handleCancelOrder}>
+                <Icon style={{color: '#741922', fontSize: 25, marginLeft: 10}} name="arrow-left"/>
+                </TouchableHighlight>
             )
         })
     });

@@ -14,6 +14,8 @@ export const CLIENT_PAYMENT = 'ClientPayment';
 export const CLIENT_PROFILE = 'ClientProfile';
 export const CLIENT_EDIT_PROFILE = 'ClientEditProfile';
 export const CLIENT_PAYMENT_METHOD = 'ClientPaymentMethod';
+export const CLIENT_ORDER_LIST = 'ClientOrderList';
+export const CLIENT_CHANGE_PASSWORD = 'ClientChangePassword';
 
 
 

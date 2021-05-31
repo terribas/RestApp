@@ -4,6 +4,8 @@ import {CreditCardInput} from 'react-native-credit-card-input';
 import {CheckBox} from 'react-native-elements'
 import Buttons from 'src/components/Buttons';
 import apiAuthFetch from 'src/services/apiAuthFetch';
+import useSavedCards from 'src/hooks/useSavedCards';
+import LoadingScreen from 'src/screens/status/LoadingScreen';
 
 
 export default function PaymentScreen({navigation, route}) {
@@ -11,7 +13,12 @@ export default function PaymentScreen({navigation, route}) {
     const {cart, total, table} = route.params;
     const [cardInput, setCardInput] = useState({});
     const [isSelected, setIsSelected] = useState(false);
-    const [card, setCard] = useState({});
+    //const [card, setCard] = useState({});
+
+    //const [card, setCard] = useState({});
+
+    const {isLoading, isSuccess, data: card} = useSavedCards();
+
     
     async function get_cards() {
         const options = {
@@ -29,8 +36,8 @@ export default function PaymentScreen({navigation, route}) {
         }
     }
 
-    useEffect( () =>{
-        get_cards()}, [] );
+    /*useEffect( () =>{
+        get_cards()}, [] );*/
 
     function handleOnPayPress() {
         payWithSavedCard()
@@ -219,7 +226,14 @@ export default function PaymentScreen({navigation, route}) {
         }
       }
 
-    if (card.tarjeta){
+    //if (card.tarjeta){
+    if (isLoading) {
+        return <LoadingScreen message='Recuperando métodos de pago...' />;
+    } else if (!isSuccess) {
+        Alert.alert('Error al recuperar los métodos de pago');
+        navigation.goBack();
+        return <View />
+    } else if (card.tarjeta){
         return(
         <View>
             <Text>Esta a punto de pagar {total.toFixed(2)}€ con su tarjeta acabada en {card.paymentMethods.data[0].card.last4} ¿Desea confirmar su pedido?</Text>

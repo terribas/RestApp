@@ -24,6 +24,7 @@ export default function Inputs(props) {
             onChangeText={props.onChangeText}
             label={props.label}
             labelStyle={{fontFamily: 'Montserrat-Regular'}}
+            errorMessage={props.errorMessage}
         />
 
     );

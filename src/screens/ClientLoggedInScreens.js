@@ -14,6 +14,8 @@ import PaymentScreen from 'src/screens/client/PaymentScreen';
 import ProfileScreen from 'src/screens/client/ProfileScreen';
 import EditProfileScreen from 'src/screens/client/EditProfileScreen';
 import PaymentMethodScreen from 'src/screens/client/PaymentMethodScreen';
+import ChangePasswordScreen from 'src/screens/client/ChangePasswordScreen';
+import OrderListScreen from 'src/screens/client/OrderListScreen';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -32,12 +34,9 @@ function OrderRootStackScreen() {
             headerTitleStyle: {
                 fontFamily: 'Montserrat-Bold',
                 fontWeight: 'bold',
-            }}}
-        >
+            }
+        }}>
             <OrderRootStack.Screen name={SCREEN.CLIENT_WELCOME} component={WelcomeScreen} options={{title: 'Bienvenido'}} />
-
-
-
             <OrderRootStack.Screen name={SCREEN.CLIENT_SCAN} component={ScanScreen} options={{title: 'Mesa'}} />
             <OrderRootStack.Screen name={SCREEN.CLIENT_PRODUCTS} component={ProductsScreen} options={{title: 'Carta'}} />
             <OrderRootStack.Screen name={SCREEN.CLIENT_CONFIRM_ORDER} component={OrderConfirmationScreen} options={{title: 'Confirmar pedido'}} />
@@ -49,10 +48,16 @@ function OrderRootStackScreen() {
 
 function ProfileRootStackScreen() {
     return (
-        <ProfileRootStack.Navigator>
+        <ProfileRootStack.Navigator screenOptions={{
+            headerTitleStyle: {
+                fontFamily: 'Montserrat-Bold',
+                fontWeight: 'bold',
+        }}}>
             <ProfileRootStack.Screen name={SCREEN.CLIENT_PROFILE} component={ProfileScreen} options={{title: 'Perfil'}} />
-            <ProfileRootStack.Screen name={SCREEN.CLIENT_EDIT_PROFILE} component={EditProfileScreen} options={{title: 'Perfil'}} />
-            <ProfileRootStack.Screen name={SCREEN.CLIENT_PAYMENT_METHOD} component={PaymentMethodScreen} options={{title: 'Perfil'}} />
+            <ProfileRootStack.Screen name={SCREEN.CLIENT_EDIT_PROFILE} component={EditProfileScreen} options={{title: 'Editar perfil'}} />
+            <ProfileRootStack.Screen name={SCREEN.CLIENT_PAYMENT_METHOD} component={PaymentMethodScreen} options={{title: 'Tu tarjeta'}} />
+            <ProfileRootStack.Screen name={SCREEN.CLIENT_ORDER_LIST} component={OrderListScreen} options={{title: 'Mis pedidos'}} />
+            <ProfileRootStack.Screen name={SCREEN.CLIENT_CHANGE_PASSWORD} component={ChangePasswordScreen} options={{title: 'Cambiar contraseña'}} />
         </ProfileRootStack.Navigator>
     );
 }
