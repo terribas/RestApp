@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, Button} from 'react-native';
+import {View, Text, StyleSheet, Button, Alert} from 'react-native';
 import {CreditCardInput} from 'react-native-credit-card-input';
 import {CheckBox} from 'react-native-elements'
 import Buttons from 'src/components/Buttons';
@@ -11,7 +11,6 @@ export default function PaymentScreen({navigation, route}) {
     const {cart, total, table} = route.params;
     const [cardInput, setCardInput] = useState({});
     const [isSelected, setIsSelected] = useState(false);
-
     const [card, setCard] = useState({});
     
     async function get_cards() {
@@ -34,13 +33,197 @@ export default function PaymentScreen({navigation, route}) {
         get_cards()}, [] );
 
     function handleOnPayPress() {
-        console.log('hola');
+        payWithSavedCard()
+        payWithNoSavedCard()
     }
+
+    function handlePayWithSavedCard(){
+        payWithSavedCard()
+    }
+
+    async function payWithSavedCard(){
+
+//        const paymentMethods = card
+        const paymentMethodId = card.paymentMethods.data[0].id
+        
+  
+  
+        console.log("Estoy en PAY WITH SAVED CARD")
+        console.log(paymentMethodId)
+        
+  
+        const options = {
+          method: 'POST',
+          body: JSON.stringify({
+            paymentMethodiD:paymentMethodId,
+            amount:total * 100
+          })
+        }
+        const response = await apiAuthFetch("/payment/payWithCard", options)
+        const json = await response.json()
+        if(json.error){
+            console.log("Error en Pago")
+            Alert.alert(
+              "Error pago",
+              "Se ha producido un error en la compra de su producto. Intentelo de nuevo o contacte a uno de nuestros encargados",
+              [
+                { text: "OK"}
+              ]
+            );
+         
+        } else if (json.success) {
+            console.log("PAGO OK")
+            Alert.alert(
+              "Pago correcto",
+              "Su pedido se ha realizado. Muchas gracias",
+              [
+                { text: "OK"}
+              ]
+            );
+        } else {
+            Alert.alert(
+                "Error pago",
+                "Se ha producido un error en la compra de su producto. Intentelo de nuevo o contacte a uno de nuestros encargados",
+                [
+                  { text: "OK"}
+                ]
+              ); 
+        }
+    }
+
+    const payWithNoSavedCard = async () => {
+        const { paymentMethod, error } = await createPaymentMethod();
+        
+        if (error) {
+          // Handle error
+        } else if (paymentMethod) {
+          const paymentMethodId = paymentMethod.id;
+          console.log("--------------------------")
+          console.log(paymentMethodId)
+          // Send the ID of the PaymentMethod to your server for the next step
+          // ...
+          console.log("number")
+          const amount = total*100
+          const options = {
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json'
+            },
+            
+            body: JSON.stringify({
+              "payment_method_id": paymentMethodId,
+              "amount":amount
+            })
+          }
+          try{
+            const response = await fetch("http://51.178.36.227:2003/api/payment/pay", options)
+            const json = await response.json()
+            console.log("response")
+            console.log(json)
+            if(json.error){
+              console.log("Error en Pago")
+              Alert.alert(
+                "Error pago",
+                "Se ha producido un error en la compra de su producto. Intentelo de nuevo o contacte a uno de nuestros encargados",
+                [
+                  { text: "OK"}
+                ]
+              );
+           
+            } else if (json.success) {
+              console.log("PAGO OK")
+              Alert.alert(
+                "Pago correcto",
+                "Su pedido se ha realizado. Muchas gracias",
+                [
+                  { text: "OK"}
+                ]
+              );
+
+                if (isSelected){
+                    console.log("Guardar tarjeta")
+                    saveCard()
+                }
+            } else {
+                Alert.alert(
+                    "Error pago",
+                    "Se ha producido un error en la compra de su producto. Intentelo de nuevo o contacte a uno de nuestros encargados",
+                    [
+                      { text: "OK"}
+                    ]
+                  ); 
+            }
+    
+          } catch(error){
+            console.log(error)
+            console.log("error de conexion (pago)")
+            Alert.alert(
+                "Error pago",
+                "Se ha producido un error en la compra de su producto. Intentelo de nuevo o contacte a uno de nuestros encargados",
+                [
+                  { text: "OK"}
+                ]
+              );
+          }
+        }
+      }; 
+
+      async function saveCard() {
+        console.log('saveCard');
+        const { paymentMethod, error } = await createPaymentMethod();
+        const options = {
+          method: 'POST',
+          body: JSON.stringify({
+            "paymentMethodId":paymentMethod.id
+          })
+        }
+        const response = await apiAuthFetch("/payment/save_card_v2", options)
+    }
+
+      async function createPaymentMethod() {
+        const number = cardInput.values.number.replace(/\s/g,"")
+        let expiry = cardInput.values.expiry
+        const month =parseInt(expiry[0]+expiry[1]) 
+        const year = parseInt("20"+expiry[3]+expiry[4])
+        const cvc = cardInput.values.cvc
+        const card = {
+          number: number ,
+          exp_month: month,
+          exp_year: year,
+          cvc: cvc,
+        }
+      
+        console.log("creando payment method")
+        const options = {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            "card": card
+          })
+        }
+        try{
+          const response = await fetch("http://51.178.36.227:2003/api/payment/createPaymentMethod", options)
+          if(!response.ok){
+            console.log("Error en createpaymentmethod")
+          } else {
+            console.log("todo ok en crear metodo de pago")
+            return await response.json()
+          }
+  
+        } catch(error){
+          console.log("error de conexion")
+        }
+      }
+
     if (card.tarjeta){
         return(
         <View>
             <Text>Esta a punto de pagar {total.toFixed(2)}€ con su tarjeta acabada en {card.paymentMethods.data[0].card.last4} ¿Desea confirmar su pedido?</Text>
-            <Button title="ACEPTAR"></Button>
+            <Button title="ACEPTAR" onPress={handlePayWithSavedCard}></Button>
             <Button title="CANCELAR"></Button>
         </View>
         )
