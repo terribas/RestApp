@@ -27,7 +27,7 @@ export default function ChangePasswordScreen({navigation, route}) {
     const {logOut} = useAuthContext();
 
     const {mutate, isLoading} = useMutation(postChangePassword, {
-        onSuccess: () => {
+        onSuccess: (response) => {
             Alert.alert('Contraseña cambiada correctamente. Vuelve a iniciar sesión');
             logOut();
         },

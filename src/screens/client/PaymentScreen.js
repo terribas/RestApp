@@ -13,6 +13,7 @@ export default function PaymentScreen({navigation, route}) {
     const {cart, total, table} = route.params;
     const [cardInput, setCardInput] = useState({});
     const [isSelected, setIsSelected] = useState(false);
+    const [paying, setPaying] = useState(false);
     //const [card, setCard] = useState({});
 
     //const [card, setCard] = useState({});
@@ -40,7 +41,6 @@ export default function PaymentScreen({navigation, route}) {
         get_cards()}, [] );*/
 
     function handleOnPayPress() {
-        payWithSavedCard()
         payWithNoSavedCard()
     }
 
@@ -49,23 +49,23 @@ export default function PaymentScreen({navigation, route}) {
     }
 
     async function payWithSavedCard(){
-
-//        const paymentMethods = card
-        const paymentMethodId = card.paymentMethods.data[0].id
-        
-  
-  
-        console.log("Estoy en PAY WITH SAVED CARD")
-        console.log(paymentMethodId)
-        
-  
-        const options = {
-          method: 'POST',
-          body: JSON.stringify({
-            paymentMethodiD:paymentMethodId,
-            amount:total * 100
-          })
-        }
+      setPaying(true)
+      let amount = total.toString()
+      amount = amount * 100
+      console.log(amount)
+      let cant = parseInt(amount)
+      console.log("pay")
+      console.log(amount)
+      const paymentMethodId = card.paymentMethods.data[0].id
+      console.log("Estoy en PAY WITH SAVED CARD")
+      console.log(paymentMethodId)
+      const options = {
+        method: 'POST',
+        body: JSON.stringify({
+          paymentMethodiD:paymentMethodId,
+          amount:cant
+        })
+      }
         const response = await apiAuthFetch("/payment/payWithCard", options)
         const json = await response.json()
         if(json.error){
@@ -77,6 +77,7 @@ export default function PaymentScreen({navigation, route}) {
                 { text: "OK"}
               ]
             );
+            setPaying(false)
          
         } else if (json.success) {
             console.log("PAGO OK")
@@ -86,7 +87,15 @@ export default function PaymentScreen({navigation, route}) {
               [
                 { text: "OK"}
               ]
+            
             );
+
+
+            //PETICION DEL PEDIDO
+
+
+
+          setPaying(false)
         } else {
             Alert.alert(
                 "Error pago",
@@ -95,13 +104,16 @@ export default function PaymentScreen({navigation, route}) {
                   { text: "OK"}
                 ]
               ); 
-        }
+              setIsPaying(false)
+            }
     }
 
     const payWithNoSavedCard = async () => {
-        const { paymentMethod, error } = await createPaymentMethod();
+      setPaying(true)
+      const { paymentMethod, error } = await createPaymentMethod();
         
         if (error) {
+          setPaying(false)
           // Handle error
         } else if (paymentMethod) {
           const paymentMethodId = paymentMethod.id;
@@ -110,7 +122,12 @@ export default function PaymentScreen({navigation, route}) {
           // Send the ID of the PaymentMethod to your server for the next step
           // ...
           console.log("number")
-          const amount = total*100
+          let amount = total.toString()
+          amount = amount * 100
+          console.log(amount)
+          let cant = parseInt(amount)
+          //cant = cant *100
+          console.log(cant)
           const options = {
             method: 'POST',
             headers: {
@@ -120,7 +137,7 @@ export default function PaymentScreen({navigation, route}) {
             
             body: JSON.stringify({
               "payment_method_id": paymentMethodId,
-              "amount":amount
+              "amount":cant
             })
           }
           try{
@@ -137,7 +154,7 @@ export default function PaymentScreen({navigation, route}) {
                   { text: "OK"}
                 ]
               );
-           
+              setPaying(false)
             } else if (json.success) {
               console.log("PAGO OK")
               Alert.alert(
@@ -148,9 +165,22 @@ export default function PaymentScreen({navigation, route}) {
                 ]
               );
 
+
+
+
+
+              //PETICION PEDIDO
+
+
+
+
+              
                 if (isSelected){
                     console.log("Guardar tarjeta")
                     saveCard()
+                } else{
+                  setPaying(false)
+
                 }
             } else {
                 Alert.alert(
@@ -160,6 +190,7 @@ export default function PaymentScreen({navigation, route}) {
                       { text: "OK"}
                     ]
                   ); 
+                  setPaying(false)
             }
     
           } catch(error){
@@ -172,6 +203,7 @@ export default function PaymentScreen({navigation, route}) {
                   { text: "OK"}
                 ]
               );
+              setPaying(false)
           }
         }
       }; 
@@ -186,9 +218,13 @@ export default function PaymentScreen({navigation, route}) {
           })
         }
         const response = await apiAuthFetch("/payment/save_card_v2", options)
+        setPaying(false)
     }
 
+
+
       async function createPaymentMethod() {
+        
         const number = cardInput.values.number.replace(/\s/g,"")
         let expiry = cardInput.values.expiry
         const month =parseInt(expiry[0]+expiry[1]) 
@@ -226,6 +262,12 @@ export default function PaymentScreen({navigation, route}) {
         }
       }
 
+      function handleCancel(){
+        navigation.goBack();
+      }
+
+
+
     //if (card.tarjeta){
     if (isLoading) {
         return <LoadingScreen message='Recuperando métodos de pago...' />;
@@ -237,8 +279,8 @@ export default function PaymentScreen({navigation, route}) {
         return(
         <View>
             <Text>Esta a punto de pagar {total.toFixed(2)}€ con su tarjeta acabada en {card.paymentMethods.data[0].card.last4} ¿Desea confirmar su pedido?</Text>
-            <Button title="ACEPTAR" onPress={handlePayWithSavedCard}></Button>
-            <Button title="CANCELAR"></Button>
+            <Buttons title="ACEPTAR" onPress={handlePayWithSavedCard} loading={paying} ></Buttons>
+            <Buttons title="CANCELAR" disabled={paying} onPress={handleCancel} ></Buttons>
         </View>
         )
     } else{
@@ -277,7 +319,7 @@ export default function PaymentScreen({navigation, route}) {
                     title="¿Quieres guardar tu tarjeta para futuros pagos?"
                     />   
             <View style={styles.buttonContainer}>
-                <Buttons title="PAGAR" onPress={handleOnPayPress} disabled={!cardInput?.valid}/>
+                <Buttons title="PAGAR" onPress={handleOnPayPress} disabled={!cardInput?.valid} loading={paying}/>
             </View>
         </View>
         );

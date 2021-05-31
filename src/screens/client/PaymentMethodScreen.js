@@ -1,8 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, Button, StyleSheet} from 'react-native';
+import {View, Text, Button, StyleSheet, Alert} from 'react-native';
 import {CreditCardInput, CardView} from 'react-native-credit-card-input';
 import Buttons from 'src/components/Buttons';
 import apiAuthFetch from 'src/services/apiAuthFetch';
+import useSavedCards from 'src/hooks/useSavedCards';
+import LoadingScreen from 'src/screens/status/LoadingScreen';
 
 const styles = StyleSheet.create({
     container: {
@@ -18,15 +20,23 @@ const styles = StyleSheet.create({
 
 export default function PaymentMethodScreen({navigation, route}) {
    
-    const [card, setCard] = useState({});
+    //const [card, setCard] = useState({});
     const [cardInput, setCardInput] = useState({});
 
-    useEffect( () =>{
-        get_cards()}, [] );
+    const {isLoading, isSuccess, data: card} = useSavedCards();
+
+    const [isPostLoading, setIsPostLoading] = useState(false);
+
+    const [loadingBt, setLoadingBt] = useState(false)
+    /*useEffect( () =>{
+        get_cards()}, [] ); 
+        */
+
 
     function handleSaveCard(){
+      
         saveCard()
-    }
+    } 
 
     
 
@@ -60,12 +70,21 @@ export default function PaymentMethodScreen({navigation, route}) {
           }
   
         } catch(error){
+          console.log(error)
           console.log("error de conexion")
+          Alert.alert(
+            "Error de conexión",
+            "No se ha podido conectar con el servidor, intentelo más tarde",
+            [
+              { text: "OK"}
+            ]
+          );
         }
       }
 
 
       async function saveCard() {
+        setLoadingBt(true)
         console.log('saveCard');
         const { paymentMethod, error } = await createPaymentMethod();
         const options = {
@@ -75,29 +94,34 @@ export default function PaymentMethodScreen({navigation, route}) {
           })
         }
         const response = await apiAuthFetch("/payment/save_card_v2", options)
-    }
 
-
-    async function get_cards() {
-        const options = {
-          method: 'POST',
-          body: JSON.stringify({
-          })
-        }
-        const response = await apiAuthFetch("/payment/getCard", options)
-        
+        console.log("saving card")
         const json = await response.json()
-        console.log(json)
-        if (json.tarjeta){
-          console.log("entro en if")
-          setCard(json)
-        } else {
+        if (json.error){
+          Alert.alert(
+            "Error al guardar la tarjeta",
+            "No se ha podido guardar la tarjeta. Intentelo de nuevo mas tarde",
+            [
+              { text: "OK"}
+            ]
+          );
+          setLoadingBt(false)
 
+        } else {
+          Alert.alert(
+            "Tarjeta guardada",
+            "Su tarjeta ha sido guardada, muchas gracias por su confianza.",
+            [
+              { text: "OK"}
+            ]
+          );
+          setLoadingBt(true)
+          navigation.goBack()
         }
-   
     }
 
     async function deleteCard() {
+        setLoadingBt(true)
         console.log("deleteCard")
         const options = {
           method: 'POST',
@@ -107,11 +131,27 @@ export default function PaymentMethodScreen({navigation, route}) {
         }
         console.log("borrando tarjeta")
         const response = await apiAuthFetch("/payment/deleteCard", options)
-        console.log(response)
-        
-      }
+        navigation.goBack() 
+        if (response.ok){
+          
+        } else{
+          
+        }
+        setLoadingBt(true)
 
-    if (card.tarjeta){
+      }
+    if (isLoading){
+      return (<LoadingScreen message="Cargando..."/>)
+    } else if (!isSuccess){
+      Alert.alert(
+        "Error de conexión",
+        "No se ha podido conectar con el servidor, intentelo más tarde",
+        [
+          { text: "OK"}
+        ]
+      );
+      return (<View/>);
+    } else if (card.tarjeta){
         
         const numeroTarjeta = "**** **** **** " +card.paymentMethods.data[0].card.last4
         const expiry = card.paymentMethods.data[0].card.exp_month+"/"+card.paymentMethods.data[0].card.exp_year
@@ -128,7 +168,13 @@ export default function PaymentMethodScreen({navigation, route}) {
                     expiry= {expiry}
                     brand="visa"
                 />
-                <Button title="Borrar metodo de pago" onPress={deleteCard}></Button>
+                
+                <Buttons
+                    title='Borrar metodo de pago'
+                    //disabled={oldPassword.length <= 0 || newPassword.length < minLength || newPassword !== newPasswordRepeat}
+                    loading={false}
+                    onPress={deleteCard}
+                />
             </View>
         );
     } else{
@@ -161,7 +207,12 @@ export default function PaymentMethodScreen({navigation, route}) {
                 onChange={setCardInput}
             />
             <View style={styles.buttonContainer}>
-                <Buttons title="Añadir tarjeta" onPress={handleSaveCard} disabled={!cardInput?.valid}/>
+                <Buttons
+                    title='Añadir tarjeta'
+                    disabled={!cardInput?.valid}
+                    loading={loadingBt}
+                    onPress={handleSaveCard}
+                />
             </View>
         </View>
     
