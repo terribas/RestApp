@@ -1,11 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {View, StyleSheet, Alert, ScrollView, Text} from 'react-native';
 import Inputs from 'src/components/Inputs';
 import Buttons from 'src/components/Buttons';
 import Texts from 'src/components/Texts';
 import {useMutation} from 'react-query';
 import apiAuthFetch from 'src/services/apiAuthFetch';
-import {useMyProfile} from 'src/hooks/useMyProfile';
+import {useMyProfile, useInvalidateMyProfileCache} from 'src/hooks/useMyProfile';
 import LoadingScreen from 'src/screens/status/LoadingScreen';
 
 
@@ -14,7 +14,10 @@ const emailRegex = /\S+@\S+\.\S+/;
 
 async function postEditUser({name, lastName, email}) {
     const response = await apiAuthFetch('/user', {method: 'PUT', body: JSON.stringify({name, lastName, email})} );
-    if (!response.ok) throw Error;
+    if (!response.ok) {
+        console.log('RESPUESTA NO OK');
+        throw Error
+    };
     const json = await response.json();
     return json;
 }
@@ -28,10 +31,15 @@ export default function ChangePasswordScreen({navigation, route}) {
     const [name, setName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
-    const [isValidEmail, setIsValidEmail] = useState(false);
+    const [isVali2dEmail, setIsValidEmail] = useState(false);
+
+    const invalidateProfile = useInvalidateMyProfileCache();
+
+    const clearCache = useCallback(() => {invalidateProfile()});
 
     const {mutate, isLoading: isUpdating} = useMutation(postEditUser, {
         onSuccess: () => {
+            clearCache();
             Alert.alert('Tu perfil se ha actualizado correctamente');
             navigation.goBack();
         },
@@ -72,7 +80,7 @@ export default function ChangePasswordScreen({navigation, route}) {
                 onChangeText={setName}
             />
 
-            <View style={{marginTop: 20}} />
+            
             <Inputs
                 placeholder='Apellidos'
                 leftIcon='person-outline'

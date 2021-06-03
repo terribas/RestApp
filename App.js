@@ -14,6 +14,12 @@ import {QueryClient, QueryClientProvider, useQuery} from 'react-query';
 import {ProductContextProvider} from './src/contexts/ProductContext';
 
 
+/*
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Warning: ...']);
+LogBox.ignoreAllLogs();
+*/
+
 export default function App() {
   const queryClient = new QueryClient();
   return (

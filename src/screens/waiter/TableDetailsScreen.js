@@ -10,7 +10,8 @@ import useTableContext from 'src/hooks/useTableContext';
 
 import useTableOrders from 'src/hooks/useTableOrders';
 
-import {API_URL} from 'src/consts/server';
+
+import apiAuthfetch from 'src/services/apiAuthFetch';
 
 
 export default function TableDetailsScreen({navigation, route}) {
@@ -38,10 +39,7 @@ export default function TableDetailsScreen({navigation, route}) {
     useEffect(function() {
         async function turnStatus() {
             console.log('el token es ' + tokenState);
-            await fetch(`${API_URL}/table/turn/${table._id}`, {
-                method: 'POST',
-                headers: { 'x-access-token': tokenState }
-            });
+            await apiAuthFetch(`/table/turn/${table._id}`, {method: 'POST'});
             invalidateTableListCache();
         }
 
@@ -79,7 +77,6 @@ export default function TableDetailsScreen({navigation, route}) {
                             />
                         )}
                     />
-                
                 }
 
 

@@ -67,7 +67,6 @@ export default function ProductsScreen({navigation, route}) {
     return (
         <View style={styles.container}>
             <View style={styles.categories} >
-                
                 <FlatList
                     data={categories}
                     renderItem={({item}) => (
@@ -79,19 +78,10 @@ export default function ProductsScreen({navigation, route}) {
                             mode={selectedCategory === item ? 'flat' : 'outlined'}
                         />
                     )}
-                    keyExtractor={item => item.id}
+                    keyExtractor={item => item?.name}
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
                 />
-                
-                {/*
-                <Category
-                    data={categories}
-                    itemSelected={(item)=>{setSelectedCategory(item.id)}}
-                    itemText={'name'}
-                    style={{}}
-                />
-                */}
             </View>
 
             <View style={styles.products}>

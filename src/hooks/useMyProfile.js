@@ -1,3 +1,4 @@
+import {useCallback} from 'react';
 import {useQuery, useQueryClient} from 'react-query';
 import apiAuthFetch from 'src/services/apiAuthFetch';
 
@@ -18,7 +19,7 @@ export function useMyProfile() {
 }
 
 
-export function invalidateMyProfileCache() {
+export function useInvalidateMyProfileCache() {
     const queryClient = useQueryClient();
     const invalidateMyProfileCache = useCallback(() => {
         queryClient.invalidateQueries(GET_MY_PROFILE);

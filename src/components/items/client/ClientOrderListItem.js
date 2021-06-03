@@ -3,7 +3,7 @@ import {View, Text, StyleSheet} from 'react-native';
 import { Icon } from 'react-native-elements'
 
 
-export default function WaiterTableOrderListItem({order}) {
+export default function ClientOrderListItem({order}) {
 
     const productsOrdered = order.products.sort((a, b) => (
         a.zone - b.zone
@@ -11,7 +11,7 @@ export default function WaiterTableOrderListItem({order}) {
 
 
     return (
-        <View style={[styles.container, order.user.role === 'waiter' ? {backgroundColor: lightblue} : {}]}>
+        <View style={styles.container}>
             <View style={styles.titleContainer}>
                 <View style={styles.nameContainer}>
                     <Icon name='person'/>
@@ -25,7 +25,7 @@ export default function WaiterTableOrderListItem({order}) {
 
             <View style={styles.productsContainer}>
                 {productsOrdered.map((product) => (
-                    <View style={[styles.itemContainer, product.zone == 1 && !order.bar_delivered || product.zone == 2 && !order.kitchen_delivered ? {backgroundColor: '#FF8484'} : {}]}>
+                    <View style={styles.itemContainer}>
                         <View style={styles.amountContainer}>
                             <Text style={styles.amountText}>{product?.amount + ''}</Text>
                         </View>
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         marginRight: 10,
 
-        borderColor: '#741922'
+        borderColor: '#741922',
     },
 
     titleContainer: {

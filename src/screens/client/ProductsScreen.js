@@ -43,11 +43,10 @@ export default function ProductsScreen({navigation, route}) {
     }
 
 
-    useLayoutEffect(function() {
+    useLayoutEffect(() => {
         navigation.setOptions({
             headerLeft: () => (
-                <TouchableHighlight
-                    onPress={handleCancelOrder}>
+                <TouchableHighlight onPress={handleCancelOrder} underlayColor='white'>
                 <Icon style={{color: '#741922', fontSize: 25, marginLeft: 10}} name="arrow-left"/>
                 </TouchableHighlight>
             )
@@ -111,12 +110,12 @@ export default function ProductsScreen({navigation, route}) {
                     renderItem={({item}) => (
                         <ClientCategoryListItem
                             category={item}
-                            key={item.id}
+                            key={item?.name}
                             onPress={() => {setSelectedCategory(item)}}
                             mode={selectedCategory === item ? 'flat' : 'outlined'}
                         />
                     )}
-                    keyExtractor={item => item.name}
+                    keyExtractor={item => item?.name}
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
                 />
