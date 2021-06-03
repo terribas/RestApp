@@ -73,9 +73,14 @@ export default {
 
         //OrderConfirmation Screen
         pantalla_principal: "Main Screen",
+        confirm_order:"Confirm order",
+        error_order_detalle:"Error sending the order",
+
 
         //Products Screen
         annade_productos_waiter:"Add products to the order",
+
+        
 
     //<---- Waiter Screens END
     //Client Screens START----> 

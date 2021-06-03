@@ -72,6 +72,9 @@ export default {
 
         //OrderConfirmation Screen
         pantalla_principal: "Pantalla principal",
+        
+        confirm_order:"Confirmar pedido",
+        error_order_detalle:"Error al solicitar el pedido",
 
         //Products Screen
         annade_productos_waiter:"Añade productos a la comanda",

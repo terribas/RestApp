@@ -21,9 +21,11 @@ export default function ProductsScreen({navigation, route}) {
     const [categories, setCategories] = useState(['']);
     const [selectedCategory, setSelectedCategory] = useState('');
     const [cart, setCart] = useState([0]);
+    const {table} = route.params
 
     const totalAmount = parseInt(cart.reduce((sum, product) => ((product.amount ?? 0) + sum), 0));
-    
+    const totalPrice = parseFloat(cart.reduce((sum, product) => ((product.price ?? 0) * (product.amount ?? 0) + sum), 0));
+
     useEffect(function() {
         if (isSuccess) {
             const cats = [];
@@ -60,7 +62,19 @@ export default function ProductsScreen({navigation, route}) {
 
 
     function handleOnConfirmPress() {
-        navigation.navigate(WAITER_CONFIRM_ORDER);
+
+        const cartCopy = [...cart];
+
+        const cleanCart = cartCopy.filter(product => (product.amount > 0));
+
+        console.log('carrito limpio ' + JSON.stringify(cleanCart));
+
+        navigation.navigate(WAITER_CONFIRM_ORDER, {
+            table: table,
+            cart: cleanCart,
+            total: totalPrice
+        });
+        
     }
 
 

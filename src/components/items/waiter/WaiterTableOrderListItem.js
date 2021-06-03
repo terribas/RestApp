@@ -11,7 +11,7 @@ export default function WaiterTableOrderListItem({order}) {
 
 
     return (
-        <View style={[styles.container, order.user.role === 'waiter' ? {backgroundColor: lightblue} : {}]}>
+        <View style={[styles.container, order.user.role === 'waiter' ? {backgroundColor: "lightblue"} : {}]}>
             <View style={styles.titleContainer}>
                 <View style={styles.nameContainer}>
                     <Icon name='person'/>
