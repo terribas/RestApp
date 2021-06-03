@@ -18,6 +18,7 @@ import {TableContextProvider} from 'src/contexts/TableContext';
 
 import useAuthContext from 'src/hooks/useAuthContext';
 import tr from 'src/language/utils';
+import WaiterChangePasswordScreen from './waiter/WaiterChangePasswordScreen';
 
 const RootWaiterStack = createStackNavigator();
 function RootWaiterStackScreen() {
@@ -27,6 +28,7 @@ function RootWaiterStackScreen() {
             <RootWaiterStack.Screen name={SCREEN.WAITER_TABLE_DETAILS} component={TableDetailsScreen} options={{title: tr("mesa")}} />
             <RootWaiterStack.Screen name={SCREEN.WAITER_PRODUCTS} component={ProductsScreen} options={{title: tr("comanda")}} />
             <RootWaiterStack.Screen name={SCREEN.WAITER_CONFIRM_ORDER} component={OrderConfirmationScreen} options={{title: tr("confirmar_comanda")}} />
+            
         </RootWaiterStack.Navigator>
     );
 }
@@ -38,6 +40,7 @@ function RootSettingsStackScreen() {
     return (
         <RootSettingsStack.Navigator>
             <RootWaiterStack.Screen name={SCREEN.WAITER_SETTINGS} component={SettingsScreen} />
+            <RootWaiterStack.Screen name={SCREEN.WAITER_CHANGE_PASSWORD} component={WaiterChangePasswordScreen} />
         </RootSettingsStack.Navigator>
     );
 }

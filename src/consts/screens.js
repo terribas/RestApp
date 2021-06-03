@@ -26,3 +26,4 @@ export const WAITER_CATEGORIES = 'WaiterCategories';
 export const WAITER_PRODUCTS = 'WaiterProducts';
 export const WAITER_CONFIRM_ORDER = 'WaiterConfirmOrder';
 export const WAITER_SETTINGS = 'WaiterSettings';
+export const WAITER_CHANGE_PASSWORD = 'WaiterChangePasswordScreen';

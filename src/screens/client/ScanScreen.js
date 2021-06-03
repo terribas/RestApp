@@ -31,6 +31,7 @@ export default function ScanScreen({navigation, route}) {
                 onRead={onRead}
                 reactivateTimeout={5000}
                 reactivate={true}   
+                //containerStyle={{height:300}}
             />
         
             <Button onPress={handleOnPress} title="Siguiente pantalla" />
