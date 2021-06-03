@@ -10,6 +10,7 @@ import LoadingScreen from 'src/screens/status/LoadingScreen';
 import {API_URL} from 'src/consts/server';
 import {useMutation} from 'react-query';
 import {CLIENT_WELCOME} from 'src/consts/screens';
+import tr from 'src/language/utils';
 
 
 async function postOrder({table, total, products}) {
@@ -35,10 +36,10 @@ export default function PaymentScreen({navigation, route}) {
 
   const {mutate: sendOrder, isLoading: isPosting, data: orderData} = useMutation(postOrder, {
     onError: () => {
-      Alert.alert('Error al completar el pedido. Inténtalo de nuevo más tarde');
+      Alert.alert(tr("error_pago_detalle"));
     },
     onSuccess: () => {
-      Alert.alert('Su pedido se ha realizado exitosamente. Muchas gracias por su confianza.');
+      Alert.alert(tr("pago_ok_detalle"));
       navigation.navigate(CLIENT_WELCOME);
     }
   })
@@ -77,8 +78,8 @@ export default function PaymentScreen({navigation, route}) {
     if(json.error){
       console.log("Error en Pago")
       Alert.alert(
-        "Error pago",
-        "Se ha producido un error en la compra de su producto. Intentelo de nuevo o contacte a uno de nuestros encargados",
+        tr("error_pago"),
+        tr("error_pago_detalle"),
         [{ text: "OK" }]
       );
       setPaying(false)
@@ -101,8 +102,8 @@ export default function PaymentScreen({navigation, route}) {
       setPaying(false)
     } else {
       Alert.alert(
-        "Error al pagar",
-        "Se ha producido un error en la compra. Inténtalo de nuevo o contacta a uno de nuestros encargados",
+        tr("error_pago"),
+        tr("error_pago_detalle"),
         [{ text: "OK" }]
       ); 
       setPaying(false)
@@ -144,8 +145,8 @@ export default function PaymentScreen({navigation, route}) {
         if(json.error){
           console.log("Error en Pago")
           Alert.alert(
-            "Error pago",
-            "Se ha producido un error en la compra de su producto. Intentelo de nuevo o contacte a uno de nuestros encargados",
+            tr("error_pago"),
+            tr("error_pago_detalle"),
             [{ text: "OK" }]
           );
           setPaying(false)
@@ -173,8 +174,8 @@ export default function PaymentScreen({navigation, route}) {
 
         } else {
           Alert.alert(
-            "Error pago",
-            "Se ha producido un error en la compra de su producto. Intentelo de nuevo o contacte a uno de nuestros encargados",
+            tr("error_pago"),
+            tr("error_pago_detalle"),
             [{ text: "OK" }]
           ); 
           setPaying(false)
@@ -184,8 +185,8 @@ export default function PaymentScreen({navigation, route}) {
         console.log(error)
         console.log("error de conexion (pago)")
         Alert.alert(
-          "Error pago",
-          "Se ha producido un error en la compra de su producto. Intentelo de nuevo o contacte a uno de nuestros encargados",
+          tr("error_pago"),
+          tr("error_pago_detalle"),
           [{ text: "OK" }]
         );
         setPaying(false)
@@ -247,17 +248,17 @@ export default function PaymentScreen({navigation, route}) {
 
 
   if (isLoading) {
-      return <LoadingScreen message='Recuperando métodos de pago...' />;
+      return <LoadingScreen message={tr("recuperando_metodos_pago")} />;
   } else if (!isSuccess) {
-      Alert.alert('Error al recuperar los métodos de pago');
+      Alert.alert(tr("recuperar_metodos_pago_error"));
       navigation.goBack();
       return <View />
   } else if (card.tarjeta){
       return(
       <View>
-          <Text>Esta a punto de pagar {total.toFixed(2)}€ con su tarjeta acabada en {card.paymentMethods.data[0].card.last4} ¿Desea confirmar su pedido?</Text>
-          <Buttons title="ACEPTAR" onPress={handlePayWithSavedCard} loading={paying} ></Buttons>
-          <Buttons title="CANCELAR" disabled={paying} onPress={handleCancel} ></Buttons>
+          <Text>{tr("pagar_tarjeta_1")} {total.toFixed(2)}{tr("pagar_tarjeta_2")}{card.paymentMethods.data[0].card.last4} {tr("pagar_tarjeta_3")}</Text>
+          <Buttons title={tr("aceptar")} onPress={handlePayWithSavedCard} loading={paying} ></Buttons>
+          <Buttons title={tr("cancelar")} disabled={paying} onPress={handleCancel} ></Buttons>
       </View>
       )
   } else{
@@ -271,10 +272,10 @@ export default function PaymentScreen({navigation, route}) {
               <CheckBox
                   checked={isSelected}
                   onPress={() => {setIsSelected(!isSelected)} }
-                  title="¿Quieres guardar tu tarjeta para futuros pagos?"
+                  title={tr("guardar_tarjeta")}
                   />   
           <View style={styles.buttonContainer}>
-              <Buttons title="PAGAR" onPress={handleOnPayPress} disabled={!cardInput?.valid} loading={paying}/>
+              <Buttons title={tr("pagar")} onPress={handleOnPayPress} disabled={!cardInput?.valid} loading={paying}/>
           </View>
       </View>
       );

@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 import ClientProductListItem from 'src/components/items/client/ClientProductListItem';
 import ClientCategoryListItem from 'src/components/items/client/ClientCategoryListItem'
-
+import tr from 'src/language/utils';
 import Buttons from 'src/components/Buttons';
 
 
@@ -29,13 +29,13 @@ export default function ProductsScreen({navigation, route}) {
 
 
     function handleCancelOrder() {
-        Alert.alert('Cancelar pedido', '¿Seguro que quieres cancelar el pedido?', [
+        Alert.alert(tr("cancelar_pedido"), tr("confirma_cancelar_pedido"), [
             {
-                text: 'Seguir pidiendo',
+                text: tr("seguir_pidiendo"),
                 style: 'cancel'
             },
             {
-                text: 'Cancelar pedido',
+                text: tr("cancelar_pedido"),
                 onPress: () => {navigation.navigate(CLIENT_WELCOME)}
                 
             }
@@ -141,7 +141,7 @@ export default function ProductsScreen({navigation, route}) {
 
             <View style={styles.bottomContainer}>
                 <Buttons
-                    title={totalAmount == 0 ? 'Añade productos a tu pedido' : `${totalAmount} Producto${totalAmount > 1 ? 's' : ''} - ${totalPrice.toFixed(2)} €`}
+                    title={totalAmount == 0 ? tr("annade_producto") : `${totalAmount} ${tr("producto")}${totalAmount > 1 ? 's' : ''} - ${totalPrice.toFixed(2)} €`}
                     onPress={handleOnConfirmPress}
                     disabled={totalAmount == 0}
                 />

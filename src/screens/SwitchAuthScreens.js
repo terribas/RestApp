@@ -6,6 +6,7 @@ import WaiterLoggedInScreens from 'src/screens/WaiterLoggedInScreens';
 import LoggedOutScreens from 'src/screens/LoggedOutScreens';
 import {CLIENT_LOGGED_IN, WAITER_LOGGED_IN, LOADING} from 'src/contexts/AuthContext';
 import LoadingScreen from 'src/screens/status/LoadingScreen';
+import tr from 'src/language/utils';
 
 
 
@@ -16,7 +17,7 @@ export default function SwitchAuthScreens(props) {
     if (loggedState === LOADING) {
         return (
             <SafeAreaView>
-                <LoadingScreen message='Cargando...' />
+                <LoadingScreen message={tr("loading")} />
             </SafeAreaView>
         );
     } else if (loggedState === CLIENT_LOGGED_IN){

@@ -6,6 +6,7 @@ import QRCodeScanner from 'react-native-qrcode-scanner';
 
 
 import Texts from 'src/components/Texts';
+import tr from 'src/language/utils';
 
 
 export default function ScanScreen({navigation, route}) {
@@ -26,7 +27,7 @@ export default function ScanScreen({navigation, route}) {
         <View style={styles.container}>
 
             <QRCodeScanner
-                topContent={<Texts h3 center bold>Escanea el código QR de tu mesa</Texts>}
+                topContent={<Texts h3 center bold>{tr("escanea_qr")}</Texts>}
                 onRead={onRead}
                 reactivateTimeout={5000}
                 reactivate={true}   

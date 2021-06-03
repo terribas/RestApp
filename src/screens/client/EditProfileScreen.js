@@ -7,6 +7,7 @@ import {useMutation} from 'react-query';
 import apiAuthFetch from 'src/services/apiAuthFetch';
 import {useMyProfile, useInvalidateMyProfileCache} from 'src/hooks/useMyProfile';
 import LoadingScreen from 'src/screens/status/LoadingScreen';
+import tr from 'src/language/utils';
 
 
 var initialName, initialLastName, initialEmail;
@@ -40,11 +41,11 @@ export default function ChangePasswordScreen({navigation, route}) {
     const {mutate, isLoading: isUpdating} = useMutation(postEditUser, {
         onSuccess: () => {
             clearCache();
-            Alert.alert('Tu perfil se ha actualizado correctamente');
+            Alert.alert(tr("actualizar_perfil_ok"));
             navigation.goBack();
         },
         onError: () => {
-            Alert.alert('Error al actualizar el perfil');
+            Alert.alert(tr("actualizar_perfil_error"));
         }
     });
 
@@ -64,7 +65,7 @@ export default function ChangePasswordScreen({navigation, route}) {
 
     
 
-    if (isUserLoading) return <LoadingScreen message='Recuperando tu perfil...' />;
+    if (isUserLoading) return <LoadingScreen message={tr("recuperando_perfil_loading")} />;
     
     return (
         <ScrollView style={styles.scrollView}>
@@ -72,40 +73,40 @@ export default function ChangePasswordScreen({navigation, route}) {
         
             <View style={{marginTop: 30}} />
             <Inputs
-                placeholder='Nombre'
+                placeholder={tr("nombre")}
                 leftIcon='person'
                 rightIcon='close'
-                label='Nombre'
+                label={tr("nombre")}
                 value={name}
                 onChangeText={setName}
             />
 
             
             <Inputs
-                placeholder='Apellidos'
+                placeholder={tr("apellidos")}
                 leftIcon='person-outline'
                 rightIcon='close'
-                label='Apellidos'
+                label={tr("apellidos")}
                 value={lastName}
                 onChangeText={setLastName}
             />
 
             
             <Inputs
-                placeholder='Email'
+                placeholder={tr("email")}
                 leftIcon='email'
                 rightIcon='close'
-                label='Email'
+                label={tr("email")}
                 value={email}
                 onChangeText={setEmail}
-                errorMessage={!emailRegex.test(email) ? 'Introduce un mail válido' : ''}
+                errorMessage={!emailRegex.test(email) ? tr("email_valido") : ''}
             
             />
 
             
             <View style={styles.buttonContainer}>
                 <Buttons
-                    title='Actualizar'
+                    title={tr("actualizar")}
                     disabled={
                         (initialName === name && initialLastName === lastName && initialEmail === email) ||
                         (name.length <= 0 || lastName.length <= 0 || email.length <= 0) ||
@@ -115,7 +116,7 @@ export default function ChangePasswordScreen({navigation, route}) {
                     onPress={() => {mutate({name, lastName, email})}}
                 />
                 <View style={{marginTop: 10}} />
-                {(name.length <= 0 || lastName.length <= 0 || email.length <= 0) && <Texts h5 center>Debes rellenar los campos</Texts>}
+                {(name.length <= 0 || lastName.length <= 0 || email.length <= 0) && <Texts h5 center>{tr("rellenar_campos")}</Texts>}
             </View>
             
         </View>

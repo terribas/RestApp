@@ -17,6 +17,8 @@ target 'RestApp' do
   pod 'Permission-Camera', :path => "#{permissions_path}/Camera.podspec"
 
 
+  pod 'RNI18n', :path => '../node_modules/react-native-i18n'
+
   target 'RestAppTests' do
     inherit! :complete
     # Pods for testing

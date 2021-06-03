@@ -4,6 +4,7 @@ import Buttons from 'src/components/Buttons';
 import {CLIENT_WELCOME, CLIENT_PAYMENT} from 'src/consts/screens';
 
 import ClientCartListItem from 'src/components/items/client/ClientCartListItem';
+import tr from 'src/language/utils';
 
 
 
@@ -33,7 +34,7 @@ export default function OrderConfirmationScreen({navigation, route}) {
         <View style={styles.container}>
 
             <View style={styles.titleContainer}>
-                <Text style={styles.titleText}>Tu carrito</Text>
+                <Text style={styles.titleText}>{tr("tu_carrito")}</Text>
             </View>
 
             <View style={styles.cartListContainer}>
@@ -49,7 +50,7 @@ export default function OrderConfirmationScreen({navigation, route}) {
             </View>
 
             <View style={styles.buttonContainer}>
-                <Buttons onPress={handleOnPress} title={"Pagar " + total.toFixed(2) + ' €' } />
+                <Buttons onPress={handleOnPress} title={tr("pagar_lc") +" "+ total.toFixed(2) + ' €' } />
             </View>
         </View>
     );

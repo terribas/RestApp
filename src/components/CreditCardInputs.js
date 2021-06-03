@@ -1,13 +1,14 @@
 import React from 'react';
 import {CreditCardInput} from 'react-native-credit-card-input';
+import tr from 'src/language/utils';
 
 export default function CreditCardInputs(props) {
     return (
         <CreditCardInput
             labels={{
-                number: 'Número de tarjeta',
-                expiry: 'Validez',
-                cvc: 'CVC'
+                number: tr("numero_tarjeta"),
+                expiry: tr("validez"),
+                cvc: tr("cvc")
             }}
             placeholders={{
                 number: '1234 5678 1234 5678',

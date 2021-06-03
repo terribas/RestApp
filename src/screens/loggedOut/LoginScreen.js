@@ -10,7 +10,7 @@ import Texts from 'src/components/Texts';
 import {API_URL} from 'src/consts/server';
 
 import useAuthContext from 'src/hooks/useAuthContext';
-
+import tr from 'src/language/utils';
 
 export default function LoginScreen({navigation, route}) {
 
@@ -50,7 +50,7 @@ export default function LoginScreen({navigation, route}) {
             const response = await fetch(`${API_URL}/auth/login`, options);
 
             if (!response.ok) {
-                Alert.alert('Usuario o contraseña incorrectos');
+                Alert.alert(tr("user_pw_invalido"));
             } else {
                 const {token, role} = await response.json();
                 
@@ -61,7 +61,7 @@ export default function LoginScreen({navigation, route}) {
                 }
             }
         } catch (error) {
-            Alert.alert('Hubo un problema al iniciar sesión.\n\nInténtalo de nuevo más tarde.');
+            Alert.alert(tr("problema_inicio_sesion"));
         }
     }
     
@@ -82,13 +82,13 @@ export default function LoginScreen({navigation, route}) {
                     resizeMode='center'
                     style={styles.image}/>
 
-                <Texts h1 semibold center>Bienvenido</Texts>
-                <Texts h4 center>Inicia sesión con tu cuenta</Texts>
+                <Texts h1 semibold center>{tr("bienvenido")}</Texts>
+                <Texts h4 center>{tr("inicia_sesion_cuenta")}</Texts>
 
                 <View style={{marginTop: 20}} />
-
+                
                 <Inputs
-                    placeholder="Correo electrónico"
+                    placeholder={tr("email")}
                     leftIcon="mail-outline"
                     rightIcon="close"
                     keyboardType="email-address"
@@ -97,7 +97,7 @@ export default function LoginScreen({navigation, route}) {
                 />
 
                 <Inputs
-                    placeholder="Contraseña"
+                    placeholder={tr("pw")}
                     leftIcon="lock"
                     isPassword={true}
                     value={password}
@@ -109,19 +109,19 @@ export default function LoginScreen({navigation, route}) {
 
                 <View style={styles.buttonsContainer}>
                     <Buttons
-                        title="Iniciar sesión"
+                        title={tr("iniciar_sesion")}
                         onPress={handleOnLoginPress}
                     />
 
                     <View style={{marginTop: 15}} />
 
                     
-                    <Texts h5 center>¿No tienes cuenta?</Texts>
+                    <Texts h5 center>{tr("sin_cuenta")}</Texts>
 
                     <View style={{marginTop: 5}} />
 
                     <Buttons
-                        title="Regístrate"
+                        title={tr("registrate")}
                         type='outline'
                         onPress={handleOnRegisterPress}
                     />

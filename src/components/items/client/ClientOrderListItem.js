@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import { Icon } from 'react-native-elements'
-
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default function ClientOrderListItem({order}) {
 
@@ -9,16 +8,30 @@ export default function ClientOrderListItem({order}) {
         a.zone - b.zone
     ));
 
+    const theDate = () => {
+        const date = new Date(order.date);
+        if (date.getTime() > Date.now() - 1000 * 60 * 60) {
+            return Math.round(((Date.now() - date.getTime()) / 1000) / 60) + ' min'
+        } else {
+            const day = date.getDate();
+            const month = date.getMonth();
+            const year = date.getFullYear();
+            return (day < 10 ? '0' : '') + day + '/' + (month < 10 ? '0' : '') + month + '/' + year.toString().substr(-2);
+        }
+    }
+
 
     return (
         <View style={styles.container}>
             <View style={styles.titleContainer}>
                 <View style={styles.nameContainer}>
-                    <Icon name='person'/>
-                    <Text> {order.user.name} {order.user.lastName}</Text>
+                    <MaterialCommunityIcons name='table-chair' style={{fontSize: 20}}/>
+                    <Text style={styles.titleText}>  Mesa {order.table.table_number}</Text>
                 </View>
 
                 <View style={styles.dateContainer}>
+                    <Text>{theDate()} </Text>
+                    <MaterialCommunityIcons name='calendar-range' style={{fontSize: 20}}/>
                 </View>
                 
             </View>
@@ -71,8 +84,8 @@ const styles = StyleSheet.create({
         marginTop: 15,
         marginBottom: 8,
 
-        marginLeft: 10,
-        marginRight: 10,
+        //marginLeft: 10,
+        //marginRight: 10,
 
         borderColor: '#741922',
     },
@@ -84,6 +97,11 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
 
+    titleText: {
+        fontFamily: 'Montserrat-SemiBold',
+        fontSize: 15
+    },
+
     nameContainer: {
         flex: 7,
         flexDirection: 'row',
@@ -92,7 +110,11 @@ const styles = StyleSheet.create({
     },
 
     dateContainer: {
-        flex: 3
+        flex: 2,
+        flexDirection: 'row',
+        alignItems: 'flex-end',
+        justifyContent: 'center',
+        paddingRight: 8
     },
 
     productsContainer: {

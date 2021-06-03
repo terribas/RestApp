@@ -6,6 +6,7 @@ import Texts from 'src/components/Texts';
 import {useMutation} from 'react-query';
 import apiAuthFetch from 'src/services/apiAuthFetch';
 import useAuthContext from 'src/hooks/useAuthContext';
+import tr from 'src/language/utils';
 
 
 const minLength = 4;
@@ -28,11 +29,11 @@ export default function ChangePasswordScreen({navigation, route}) {
 
     const {mutate, isLoading} = useMutation(postChangePassword, {
         onSuccess: (response) => {
-            Alert.alert('Contraseña cambiada correctamente. Vuelve a iniciar sesión');
+            Alert.alert(tr("cambio_pw_ok"));
             logOut();
         },
         onError: () => {
-            Alert.alert('Error al cambiar la contraseña. Comprueba que la actual sea correcta');
+            Alert.alert(tr("cambio_pw_error"));
         }
     });
 
@@ -43,49 +44,49 @@ export default function ChangePasswordScreen({navigation, route}) {
         
             <View style={{marginTop: 30}} />
             <Inputs
-                placeholder='Contraseña actual'
+                placeholder={tr("pw_actual")}
                 isPassword
                 leftIcon='lock-outline'
                 rightIcon='close'
-                label='Contraseña actual'
+                label={tr("pw_actual")}
                 value={oldPassword}
                 onChangeText={setOldPassword}
             />
 
             <View style={{marginTop: 20}} />
             <Inputs
-                placeholder='Nueva contraseña'
+                placeholder={tr("pw_nueva")}
                 leftIcon='lock'
                 rightIcon='close'
                 isPassword
-                label='Nueva contraseña'
+                label={tr("pw_nueva")}
                 value={newPassword}
                 onChangeText={setNewPassword}
             />
 
             
             <Inputs
-                placeholder='Repetir nueva contraseña'
+                placeholder={tr("re_pw_nueva")}
                 leftIcon='lock'
                 rightIcon='close'
                 isPassword
-                label='Repetir nueva contraseña'
+                label={tr("re_pw_nueva")}
                 value={newPasswordRepeat}
                 onChangeText={setNewPasswordRepeat}
-                errorMessage={newPasswordRepeat.length > 0 && newPasswordRepeat !== newPassword ? 'Las contraseñas no coinciden' : ''}
+                errorMessage={newPasswordRepeat.length > 0 && newPasswordRepeat !== newPassword ? tr("pw_distinta") : ''}
             
             />
 
             
             <View style={styles.buttonContainer}>
                 <Buttons
-                    title='Cambiar contraseña'
+                    title={tr("cambiar_pw")}
                     disabled={oldPassword.length <= 0 || newPassword.length < minLength || newPassword !== newPasswordRepeat}
                     loading={isLoading}
                     onPress={() => {mutate({oldPassword, newPassword})}}
                 />
                 <View style={{marginTop: 10}} />
-                {newPassword.length < minLength && <Texts h5 center>La nueva contraseña debe tener al menos {minLength} caracteres</Texts>}
+                {newPassword.length < minLength && <Texts h5 center>{tr("min_char_1")}{minLength}{tr("min_char_2")}</Texts>}
             </View>
             
         </View>

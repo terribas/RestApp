@@ -3,28 +3,29 @@ import {View, Text, Button, StyleSheet, Alert} from 'react-native';
 import { ListItem, Icon } from 'react-native-elements';
 import Buttons from 'src/components/Buttons';
 import useAuthContext from 'src/hooks/useAuthContext';
+import tr from 'src/language/utils';
 
 import {CLIENT_EDIT_PROFILE, CLIENT_PAYMENT_METHOD, CLIENT_ORDER_LIST, CLIENT_CHANGE_PASSWORD} from 'src/consts/screens';
 
 
 const options = [
   {
-    title: 'Editar perfil',
+    title: tr("editar_perfil"),
     icon: 'person',
     screen: CLIENT_EDIT_PROFILE
   },
   {
-    title: 'Mi tarjeta',
+    title: tr("mi_tarjeta"),
     icon: 'credit-card',
     screen: CLIENT_PAYMENT_METHOD
   },
   {
-    title: 'Mis pedidos',
+    title: tr("mis_pedidos"),
     icon: 'history',
     screen: CLIENT_ORDER_LIST
   },
   {
-    title: 'Cambiar contraseña',
+    title: tr("cambiar_pw"),
     icon: 'lock',
     screen: CLIENT_CHANGE_PASSWORD
   }
@@ -37,13 +38,13 @@ export default function ProfileScreen({navigation, route}) {
     const {logOut} = useAuthContext();
 
     function handleOnLogout() {
-        Alert.alert('Cerrar sesión', '¿Desea cerrar sesión?', [
+        Alert.alert(tr("cerrar_sesion"), tr("confirma_cerrar_sesion"), [
             {
-                text: 'Cerrar sesión',
+                text: tr("cerrar_sesion"),
                 onPress: logOut  
             },
             {
-                text: 'Cancelar',
+                text: tr("cancelar"),
                 style: 'cancel'
             }
         ])
@@ -65,7 +66,7 @@ export default function ProfileScreen({navigation, route}) {
         }
         </View>
         <View style={styles.bottomContainer}>
-          <Buttons title='Cerrar sesión' type='outline' onPress={handleOnLogout}/>
+          <Buttons title={tr("cerrar_sesion")} type='outline' onPress={handleOnLogout}/>
         </View>
         </View>
     );

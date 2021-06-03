@@ -1,16 +1,51 @@
 import React, {useState, useEffect, useLayoutEffect, useCallback} from 'react';
-import {View, Text, Button, StyleSheet, FlatList, ScrollView} from 'react-native';
+import {View, Text, Button, StyleSheet, FlatList, ScrollView, Alert} from 'react-native';
 import {CLIENT_SCAN} from 'src/consts/screens';
 import useAuthContext from 'src/hooks/useAuthContext';
 import apiAuthFetch from 'src/services/apiAuthFetch';
 import { useFocusEffect } from '@react-navigation/native';
 import Texts from 'src/components/Texts';
+import Buttons from 'src/components/Buttons';
 import {useMyProfile} from 'src/hooks/useMyProfile';
 import ClientOrderListItem from 'src/components/items/client/ClientOrderListItem';
+import ClientProductPreviewListItem from 'src/components/items/client/ClientProductPreviewListItem';
+import tr from 'src/language/utils';
+
+const randomProducts = [
+    {
+        "zone": 2,
+        "name": "Paella",
+        "image_url": "https://recetasdecocina.elmundo.es/wp-content/uploads/2017/09/paella-de-pulpo.jpg",
+    },
+    {
+        "zone": 2,
+        "name": "Tarta de queso",
+        "image_url": "https://www.annarecetasfaciles.com/files/tarta-de-queso-de-la-vina.jpg",
+    },
+    {
+
+        "zone": 2,
+        "name": "Producto Testeando",
+        "image_url": "https://recetasdecocina.elmundo.es/wp-content/uploads/2017/09/paella-de-pulpo.jpg",
+    },
+    {
+        "zone": 2,
+        "name": "Producto de prueba",
+        "image_url": "https://www.petitchef.es/imgupl/recipe/tarta-de-queso-esponjosa--445890p709045.jpg",
+    },
+    {
+        "zone": 2,
+        "name": "Pulpo a la gallega",
+        "image_url": "https://www.hola.com/imagenes/cocina/recetas/2016033184797/pulpo-gallega/0-805-441/pulpo-a-la-gallega-con-cachelos-m.jpg",
+    },
+]
+
+
 
 export default function WelcomeScreen({navigation, route}) {
 
     const [lastOrder, setLastOrder] = useState();
+    const [waiterCalled, setWaiterCalled] = useState(false);
     const {logOut, tokenState} = useAuthContext()
     const {isLoading, isSuccess, data: user} = useMyProfile();
 
@@ -22,27 +57,29 @@ export default function WelcomeScreen({navigation, route}) {
                 if (response.ok) {
                     const json = await response.json();
                     console.log(json);
-                    const array = [];
-                    array[0] = json
-                    setLastOrder(array);
+                    
+                    setLastOrder(json);
                 }
             }
             getLastOrders();
         }, [])
     );
 
-    function handleOnPress() {
-        console.log(lastOrder);
-        /*
-        console.log(new Date(lastOrder.date).getTime());
-        console.log(Date.now());
 
-        if (new Date(lastOrder.date).getTime() > Date.now() - 1000 * 60 * 30) {
-            console.log('Es una order reciente');
+    async function callWaiter() {
+        await apiAuthFetch(`/table/turn/${lastOrder?.table._id}`, {method: 'POST'});
+    }
+
+    function handleOnCallWaiter(){
+        if (!waiterCalled) {
+            callWaiter();
+            Alert.alert(tr("camarero_atencion"))
+            setWaiterCalled(true);
         }
+    }
 
+    function handleOnOrderPress() {
         navigation.navigate(CLIENT_SCAN);
-        */
     }
 
 
@@ -51,36 +88,59 @@ export default function WelcomeScreen({navigation, route}) {
     return (
         
         <View style={styles.container}>
-        <ScrollView>
+        
             <View style={styles.topContainer}>
-            
+            <ScrollView style={{flex: 1}}>
             <View style={{marginTop: 15}} />
-            <Texts h2 semibold>Bienvenido, {user?.name}</Texts>
+            <Texts h2 semibold>{tr("bienvenido")}, {user?.name}</Texts>
 
             
             
             
             {lastOrder ?
-                <>
-                <View style={{marginTop: 10}} />
-                <Texts h4 bold color='gray'>Tu último pedido</Texts>
+                <View>
+                <View style={{marginTop: 10}} />  
+                <Texts h4 bold color='gray'>{tr("ultimo_pedido")}</Texts>
+
+                {/*
                 <FlatList data={lastOrder}
                     keyExtractor={item => item._id}
                     renderItem={({item}) => (<ClientOrderListItem order={item} />)}
-                />
-                    
+                />*/}
+
+                <ClientOrderListItem order={lastOrder} />
+
+                {new Date(lastOrder.date).getTime() > Date.now() - 1000 * 60 * 30 &&
+                    <Buttons title={tr("necesito_ayuda")} type='outline' onPress={handleOnCallWaiter} disabled={waiterCalled}/>
+                }
                 
-                </>
+                
+                </View>
             : <></>}
             
-
-            <Button onPress={handleOnPress} title="Siguiente pantalla" />
+            <View style={{marginTop: 20}} />
+            <Texts h3 semibold >{tr("con_hambre")}</Texts>
+            <Texts h5 semibold color='gray'>{tr("algunos_productos")}</Texts>
+            <View style={{marginTop: 10}} />
+            <FlatList
+                horizontal={true}
+                data={randomProducts}
+                renderItem={({item}) => (
+                    <ClientProductPreviewListItem product={item}/>
+                )}
+                keyExtractor={item => item.name}
+                showsHorizontalScrollIndicator={false}
+            />
+        
+            
+            </ScrollView>
             </View>
+
 
             <View style={styles.bottomContainer}>
-
+                <Buttons onPress={handleOnOrderPress} title={tr("hacer_pedido")} />
             </View>
-            </ScrollView>
+            
         </View>
         
     );
@@ -94,13 +154,15 @@ const styles = StyleSheet.create({
     },
 
     topContainer: {
-        flex: 9,
-        paddingLeft: 8,
-        paddingRight: 8
+        flex: 10,
+        paddingLeft: 14,
+        paddingRight: 14,
     },
 
     bottomContainer: {
         flex: 1,
-        backgroundColor: 'red'
+        paddingLeft: 10,
+        paddingRight: 10,
+        justifyContent: 'center',
     }
 });

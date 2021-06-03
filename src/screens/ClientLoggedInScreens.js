@@ -18,6 +18,7 @@ import ChangePasswordScreen from 'src/screens/client/ChangePasswordScreen';
 import OrderListScreen from 'src/screens/client/OrderListScreen';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import tr from 'src/language/utils';
 
 
 const Tab = createBottomTabNavigator();
@@ -36,11 +37,11 @@ function OrderRootStackScreen() {
                 fontWeight: 'bold',
             }
         }}>
-            <OrderRootStack.Screen name={SCREEN.CLIENT_WELCOME} component={WelcomeScreen} options={{title: 'Bienvenido'}} />
-            <OrderRootStack.Screen name={SCREEN.CLIENT_SCAN} component={ScanScreen} options={{title: 'Mesa'}} />
-            <OrderRootStack.Screen name={SCREEN.CLIENT_PRODUCTS} component={ProductsScreen} options={{title: 'Carta'}} />
-            <OrderRootStack.Screen name={SCREEN.CLIENT_CONFIRM_ORDER} component={OrderConfirmationScreen} options={{title: 'Confirmar pedido'}} />
-            <OrderRootStack.Screen name={SCREEN.CLIENT_PAYMENT} component={PaymentScreen} options={{title: 'Pagar'}} />
+            <OrderRootStack.Screen name={SCREEN.CLIENT_WELCOME} component={WelcomeScreen} options={{title: tr("bienvenido")}} />
+            <OrderRootStack.Screen name={SCREEN.CLIENT_SCAN} component={ScanScreen} options={{title: tr("bienvenido")}} />
+            <OrderRootStack.Screen name={SCREEN.CLIENT_PRODUCTS} component={ProductsScreen} options={{title: tr("carta")}} />
+            <OrderRootStack.Screen name={SCREEN.CLIENT_CONFIRM_ORDER} component={OrderConfirmationScreen} options={{title: tr("confirmar_pedido")}} />
+            <OrderRootStack.Screen name={SCREEN.CLIENT_PAYMENT} component={PaymentScreen} options={{title: tr("pagar_lc")}} />
         </OrderRootStack.Navigator>
     );
 }
@@ -53,11 +54,11 @@ function ProfileRootStackScreen() {
                 fontFamily: 'Montserrat-Bold',
                 fontWeight: 'bold',
         }}}>
-            <ProfileRootStack.Screen name={SCREEN.CLIENT_PROFILE} component={ProfileScreen} options={{title: 'Perfil'}} />
-            <ProfileRootStack.Screen name={SCREEN.CLIENT_EDIT_PROFILE} component={EditProfileScreen} options={{title: 'Editar perfil'}} />
-            <ProfileRootStack.Screen name={SCREEN.CLIENT_PAYMENT_METHOD} component={PaymentMethodScreen} options={{title: 'Tu tarjeta'}} />
-            <ProfileRootStack.Screen name={SCREEN.CLIENT_ORDER_LIST} component={OrderListScreen} options={{title: 'Mis pedidos'}} />
-            <ProfileRootStack.Screen name={SCREEN.CLIENT_CHANGE_PASSWORD} component={ChangePasswordScreen} options={{title: 'Cambiar contraseña'}} />
+            <ProfileRootStack.Screen name={SCREEN.CLIENT_PROFILE} component={ProfileScreen} options={{title: tr("tab_bar_perfil")}} />
+            <ProfileRootStack.Screen name={SCREEN.CLIENT_EDIT_PROFILE} component={EditProfileScreen} options={{title: tr("editar_perfil")}} />
+            <ProfileRootStack.Screen name={SCREEN.CLIENT_PAYMENT_METHOD} component={PaymentMethodScreen} options={{title: tr("mi_tarjeta")}} />
+            <ProfileRootStack.Screen name={SCREEN.CLIENT_ORDER_LIST} component={OrderListScreen} options={{title: tr("mis_pedidos")}} />
+            <ProfileRootStack.Screen name={SCREEN.CLIENT_CHANGE_PASSWORD} component={ChangePasswordScreen} options={{title: tr("cambiar_pw")}} />
         </ProfileRootStack.Navigator>
     );
 }
@@ -82,7 +83,7 @@ export default function ClientLoggedInScreens() {
                 name='OrderTab'
                 component={OrderRootStackScreen}
                 options={{
-                    title: 'Pedir',
+                    title: tr("tab_bar_pedir"),
                     tabBarIcon: ({color, size}) => (
                         <MaterialCommunityIcons name="food-fork-drink" color={color} size={size} />
                     ),
@@ -92,7 +93,7 @@ export default function ClientLoggedInScreens() {
                 name='ProfileTab'
                 component={ProfileRootStackScreen}
                 options={{
-                    title: 'Perfil',
+                    title: tr("tab_bar_perfil"),
                     tabBarIcon: ({color, size}) => (
                         <MaterialCommunityIcons name="account" color={color} size={size} />
                     ),

@@ -12,6 +12,7 @@ import useTableOrders from 'src/hooks/useTableOrders';
 
 
 import apiAuthfetch from 'src/services/apiAuthFetch';
+import tr from 'src/language/utils';
 
 
 export default function TableDetailsScreen({navigation, route}) {
@@ -31,7 +32,7 @@ export default function TableDetailsScreen({navigation, route}) {
     useLayoutEffect(function() {
         console.log('uselayouteffect');
         navigation.setOptions({
-            title: 'Mesa ' + table.table_number
+            title: tr("mesa")+" " + table.table_number
         });
     });
 
@@ -85,10 +86,10 @@ export default function TableDetailsScreen({navigation, route}) {
 
             <View style={styles.buttonsContainer}>
                 <View style={styles.qrButtonContainer}>
-                    <Buttons onPress={handleOnQrPress} title='QR' icon='qrcode' style={styles.qrButton}/>
+                    <Buttons onPress={handleOnQrPress} title={tr("qr")} icon='qrcode' style={styles.qrButton}/>
                 </View>
                 <View style={styles.orderButtonContainer}>
-                    <Buttons onPress={handleOnOrderPress} title='Crear comanda' icon='plus'/>
+                    <Buttons onPress={handleOnOrderPress} title={tr("crear_comanda")} icon='plus'/>
                 </View>
             </View>
         </View>

@@ -7,16 +7,17 @@ import {useMutation} from 'react-query';
 import apiAuthFetch from 'src/services/apiAuthFetch';
 import LoadingScreen from 'src/screens/status/LoadingScreen';
 import DropDownPicker from 'react-native-dropdown-picker';
+import tr from 'src/language/utils';
 
 
 const dropdownItems = [
-    {label: 'A través de un amigo', value: 'Friends'},
-    {label: 'En un anuncio de internet', value: 'Internet Ad'},
-    {label: 'Instagram', value: 'Instagram'},
-    {label: 'Facebook', value: 'Facebook'},
-    {label: 'En la radio', value: 'Radio'},
-    {label: 'En la TV', value: 'TV'},
-    {label: 'Otro', value: 'Others'},
+    {label: tr("dropitem_friend"), value: 'Friends'},
+    {label: tr("dropitem_internet"), value: 'Internet Ad'},
+    {label: tr("dropitem_instagram"), value: 'Instagram'},
+    {label: tr("dropitem_facebook"), value: 'Facebook'},
+    {label: tr("dropitem_radio"), value: 'Radio'},
+    {label: tr("dropitem_tv"), value: 'TV'},
+    {label: tr("dropitem_other"), value: 'Others'},
 ]
 
 
@@ -45,11 +46,11 @@ export default function Register({navigation, route}) {
 
     const {mutate, isLoading} = useMutation(postRegister, {
         onSuccess: () => {
-            Alert.alert('Tu cuenta se ha creado correctamente');
+            Alert.alert(tr("registro_ok"));
             navigation.goBack();
         },
         onError: () => {
-            Alert.alert('Error al crear la cuenta. Comprueba que no existe');
+            Alert.alert(tr("registro_error"));
         }
     });
 
@@ -61,27 +62,27 @@ export default function Register({navigation, route}) {
             <View style={{marginTop: 30}}/>
             <Image style={styles.logo} source={require('assets/logo/single.png')}/>
             <View style={{marginTop: 10}}/>
-            <Texts h3 center semibold>Crea tu cuenta en RestApp</Texts>
+            <Texts h3 center semibold>{tr("crea_cuenta")}</Texts>
         
             
             <View style={{marginTop: 40}} />
-            <View style={styles.leftContainer}><Texts h4 semibold color='gray'>Tus datos</Texts></View>
+            <View style={styles.leftContainer}><Texts h4 semibold color='gray'>{tr("tus_datos")}</Texts></View>
             <View style={{marginTop: 5}} />
             <Inputs
-                placeholder='Nombre'
+                placeholder={tr("nombre")}
                 leftIcon='person'
                 rightIcon='close'
-                label='Nombre'
+                label={tr("nombre")}
                 value={name}
                 onChangeText={setName}
             />
 
             <View style={{marginTop: 5}} />
             <Inputs
-                placeholder='Apellidos'
+                placeholder={tr("apellidos")}
                 leftIcon='person-outline'
                 rightIcon='close'
-                label='Apellidos'
+                label={tr("apellidos")}
                 value={lastName}
                 onChangeText={setLastName}
             />
@@ -89,22 +90,22 @@ export default function Register({navigation, route}) {
 
 
             <View style={{marginTop: 20}} />
-            <View style={styles.leftContainer}><Texts h4 semibold color='gray'>Tu inicio de sesión</Texts></View>
+            <View style={styles.leftContainer}><Texts h4 semibold color='gray'>{tr("tu_inicio_sesion")}</Texts></View>
             <View style={{marginTop: 5}} />
             <Inputs
-                placeholder='Email'
+                placeholder={tr("email")}
                 leftIcon='email'
                 rightIcon='close'
-                label='Email'
+                label={tr("email")}
                 value={email}
                 onChangeText={setEmail}
-                errorMessage={email.length > 0 && !emailRegex.test(email) ? 'Introduce un mail válido' : ''}
+                errorMessage={email.length > 0 && !emailRegex.test(email) ? tr("email_valido") : ''}
             />
 
 
             <View style={{marginTop: 5}} />
             <Inputs
-                placeholder='Crea tu contraseña segura'
+                placeholder={tr("pw_registro")}
                 leftIcon='lock'
                 rightIcon='close'
                 label='Contraseña'
@@ -117,24 +118,24 @@ export default function Register({navigation, route}) {
 
             <View style={{marginTop: 5}} />
             <Inputs
-                placeholder='Repite contraseña'
+                placeholder={tr("repw_registro")}
                 leftIcon='lock-outline'
                 rightIcon='close'
                 label='Repite contraseña'
                 isPassword
                 value={passwordRepeat}
                 onChangeText={setPasswordRepeat}
-                errorMessage={passwordRepeat.length > 0 && passwordRepeat !== password ? 'Las contraseñas no coinciden' : ''}
+                errorMessage={passwordRepeat.length > 0 && passwordRepeat !== password ? tr("pw_distinta") : ''}
             />
 
             <View style={{marginTop: 10}} />
-            <View style={styles.leftContainer}><Texts h4 semibold color='gray'>¿Cómo nos conociste?</Texts></View>
+            <View style={styles.leftContainer}><Texts h4 semibold color='gray'>{tr("como_conociste")}</Texts></View>
             <DropDownPicker
                 value={referral}
                 setValue={setReferral}
                 open={dropdownOpen}
                 setOpen={setDropdownOpen}
-                placeholder='¿Cómo nos conociste?'
+                placeholder={tr("como_conociste")}
                 items={dropdownItems}
                 style={{borderColor: '#741922'}}
                 containerStyle={{width: '85%' }}
@@ -144,7 +145,7 @@ export default function Register({navigation, route}) {
             
             <View style={styles.buttonContainer}>
                 <Buttons
-                    title='Regístrate'
+                    title={tr("registrate")}
                     disabled={
                         name.length <= 0 || lastName.length <= 0 || email.length <= 0 || password.length <= 0 || passwordRepeat.length <= 0 || password !== passwordRepeat ||
                         !emailRegex.test(email) || !referral
@@ -155,7 +156,7 @@ export default function Register({navigation, route}) {
                 <View style={{marginTop: 10}} />
                 {(name.length <= 0 || lastName.length <= 0 || email.length <= 0 ||
                 password.length <= 0 || passwordRepeat.length <= 0 || referral == null)
-                && <Texts h5 center>Debes rellenar los campos</Texts>}
+                && <Texts h5 center>{tr("rellenar_campos")}</Texts>}
             </View>
 
             <View style={{marginTop: 100}} />

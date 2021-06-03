@@ -7,8 +7,7 @@ import Buttons from 'src/components/Buttons';
 import apiAuthFetch from 'src/services/apiAuthFetch';
 import useSavedCards from 'src/hooks/useSavedCards';
 import LoadingScreen from 'src/screens/status/LoadingScreen';
-
-
+import tr from 'src/language/utils';
 
 export default function PaymentMethodScreen({navigation, route}) {
 
@@ -52,8 +51,8 @@ export default function PaymentMethodScreen({navigation, route}) {
           console.log(error)
           console.log("error de conexion")
           Alert.alert(
-            "Error de conexión",
-            "No se ha podido conectar con el servidor, inténtalo más tarde",
+            tr("error_conexion"),
+            tr("error_conexion_detalle")
             [{ text: "OK" }]
           );
         }
@@ -76,16 +75,16 @@ export default function PaymentMethodScreen({navigation, route}) {
       const json = await response.json()
       if (json.error){
         Alert.alert(
-          "Error al guardar la tarjeta",
-          "No se ha podido guardar la tarjeta. Inténtalo de nuevo mas tarde",
+          tr("error_guardar"),
+          tr("error_guardar_detalle"),
           [{ text: "OK" }]
         );
         setLoadingBt(false)
 
       } else {
         Alert.alert(
-          "Tarjeta guardada",
-          "Su tarjeta ha sido guardada exitosamente.",
+          tr("tarjeta_guardada"),
+          tr("tarjeta_guardada_detalle"),
           [{ text: "OK" }]
         );
         setLoadingBt(true)
@@ -100,22 +99,22 @@ export default function PaymentMethodScreen({navigation, route}) {
       const response = await apiAuthFetch("/payment/deleteCard", {method: 'POST'})
       
       if (response.ok){
-        Alert.alert('Su tarjeta se ha borrado correctamente');
+        Alert.alert(tr("borrado_metodo_pago"));
         navigation.goBack();
       } else{
-        Alert.alert('Error al borrar su tarjeta. Inténtalo de nuevo más tarde');
+        Alert.alert(tr("error_borrar_metodo_pago"));
         setLoadingBt(false);
       }
     }
 
 
     if (isLoading){
-      return <LoadingScreen message="Cargando..."/>;
+      return <LoadingScreen message={tr("cargando")}/>;
 
     } else if (!isSuccess){
       Alert.alert(
-        "Error de conexión",
-        "No se ha podido conectar con el servidor, intentelo más tarde",
+        tr("error_conexion"),
+        tr("error_conexion_detalle"),
         [{ text: "OK" }]
       );
       navigation.goBack();
@@ -128,7 +127,7 @@ export default function PaymentMethodScreen({navigation, route}) {
 
         return (
             <View>
-              <Text>Payment Method</Text>
+              <Text>{tr("metodo_pago")}</Text>
               <CreditCardViews
                   number={cardNumber}
                   expiry={expiry}
@@ -136,7 +135,7 @@ export default function PaymentMethodScreen({navigation, route}) {
               />
               
               <Buttons
-                  title='Borrar metodo de pago'
+                  title={tr("borrar_metodo_pago")}
                   loading={loadingBt}
                   onPress={deleteCard}
                   //onPress={() => {console.log(last4)}}
@@ -147,13 +146,13 @@ export default function PaymentMethodScreen({navigation, route}) {
       return(
         <View>
 
-          <Text>No se ha encontrado metodo de pago</Text>
+          <Text>{tr("sin_metodo_pago")}</Text>
 
           <CreditCardInputs onChange={setCardInput} />
 
           <View style={styles.buttonContainer}>
               <Buttons
-                  title='Añadir tarjeta'
+                  title={tr("add_tarjeta")}
                   disabled={!cardInput?.valid}
                   loading={loadingBt}
                   onPress={handleSaveCard}

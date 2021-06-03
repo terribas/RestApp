@@ -7,6 +7,7 @@ import {Chip} from 'react-native-elements';
 
 import WaiterProductListItem from 'src/components/items/waiter/WaiterProductListItem';
 import WaiterCategoryListItem from 'src/components/items/waiter/WaiterCategoryListItem'
+import tr from 'src/language/utils';
 
 import Buttons from 'src/components/Buttons';
 
@@ -104,7 +105,7 @@ export default function ProductsScreen({navigation, route}) {
 
             <View style={styles.bottomContainer}>
                 <Buttons
-                    title={totalAmount == 0 ? 'Añade productos a la comanda' : `${totalAmount} PRODUCTO${totalAmount > 1 ? 'S' : ''}`}
+                    title={totalAmount == 0 ? tr("annade_productos_waiter") : `${totalAmount} ${tr("producto")}${totalAmount > 1 ? 's' : ''}`}
                     onPress={handleOnConfirmPress}
                     disabled={totalAmount == 0}
                     

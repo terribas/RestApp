@@ -17,15 +17,16 @@ import {TableContextProvider} from 'src/contexts/TableContext';
 
 
 import useAuthContext from 'src/hooks/useAuthContext';
+import tr from 'src/language/utils';
 
 const RootWaiterStack = createStackNavigator();
 function RootWaiterStackScreen() {
     return (
         <RootWaiterStack.Navigator>
-            <RootWaiterStack.Screen name={SCREEN.WAITER_TABLES_LIST} component={TablesScreen} options={{title: 'Mesas'}} />
-            <RootWaiterStack.Screen name={SCREEN.WAITER_TABLE_DETAILS} component={TableDetailsScreen} options={{title: 'Mesa'}} />
-            <RootWaiterStack.Screen name={SCREEN.WAITER_PRODUCTS} component={ProductsScreen} options={{title: 'Comanda'}} />
-            <RootWaiterStack.Screen name={SCREEN.WAITER_CONFIRM_ORDER} component={OrderConfirmationScreen} options={{title: 'Confirmar comanda'}} />
+            <RootWaiterStack.Screen name={SCREEN.WAITER_TABLES_LIST} component={TablesScreen} options={{title: tr("tab_bar_mesas")}} />
+            <RootWaiterStack.Screen name={SCREEN.WAITER_TABLE_DETAILS} component={TableDetailsScreen} options={{title: tr("mesa")}} />
+            <RootWaiterStack.Screen name={SCREEN.WAITER_PRODUCTS} component={ProductsScreen} options={{title: tr("comanda")}} />
+            <RootWaiterStack.Screen name={SCREEN.WAITER_CONFIRM_ORDER} component={OrderConfirmationScreen} options={{title: tr("confirmar_comanda")}} />
         </RootWaiterStack.Navigator>
     );
 }
@@ -58,14 +59,14 @@ export default function WaiterLoggedInScreens() {
                     name='WaiterTab'
                     component={RootWaiterStackScreen}
                     options={{
-                        title: 'Mesas',
+                        title: tr("tab_bar_mesas"),
                         tabBarIcon: ({color, size}) => (
                             <MaterialCommunityIcons name="table-chair" color={color} size={size} />
                         ),
                     }}
                 />
                 <Tab.Screen name='SettingsTab' component={RootSettingsStackScreen} options={{
-                        title: 'Opciones',
+                        title: tr("tab_bar_opciones"),
                         tabBarIcon: ({color, size}) => (
                             <MaterialCommunityIcons name="account-cog" color={color} size={size} />
                         )
