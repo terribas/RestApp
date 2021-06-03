@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import tr from 'src/language/utils';
 
 export default function ClientOrderListItem({order}) {
 
@@ -26,7 +27,7 @@ export default function ClientOrderListItem({order}) {
             <View style={styles.titleContainer}>
                 <View style={styles.nameContainer}>
                     <MaterialCommunityIcons name='table-chair' style={{fontSize: 20}}/>
-                    <Text style={styles.titleText}>  Mesa {order.table.table_number}</Text>
+                    <Text style={styles.titleText}>  {tr("mesa")} {order.table.table_number}</Text>
                 </View>
 
                 <View style={styles.dateContainer}>
