@@ -16,6 +16,7 @@ export default {
         registro:'Registro',
         comanda:"Comanda",
         confirmar_comanda:"Confirmar comanda",
+        
 
 
         
@@ -48,6 +49,7 @@ export default {
         dropitem_radio: "Radio",
         dropitem_tv: "TV",
         dropitem_other: "Otro",
+        pw: "Password",
         repw_registro:"Repite contraseña",
         tu_inicio_sesion:"Tu inicio de sesión",
         pw_distinta:"Las contraseñas no coinciden",
@@ -117,6 +119,13 @@ export default {
         actualizar_perfil_error:"Error al actualizar el perfil",
         actualizar_perfil_ok:"Tu perfil se ha actualizado correctamente",
 
+
+        // Order list screen
+        cargando_pedidos: "Cargando tus pedidos...",
+        error_cargando_pedidos: "Error al cargar tus pedidos. Inténtalo de nuevo más tarde.",
+        tus_pedidos: "Tu historial de pedidos:",
+
+
         //Scan Screen
         escanea_qr: "Escanea el código QR de tu mesa",
 
@@ -142,7 +151,7 @@ export default {
         cvc:"CVC",
         numero_placeholder:"4242 4242 4242 4242",
         validez_placeholder: "MM/AA",
-        guardar_tarjeta:"¿Quieres guardar tu tarjeta para futuros pagos?",
+        guardar_tarjeta:"¿Quieres guardar esta tarjeta para futuros pagos?",
         pagar:"PAGAR",
 
         //Payment Method Screen
@@ -153,12 +162,13 @@ export default {
         error_guardar_detalle:"No se ha podido guardar la tarjeta. Intentelo de nuevo mas tarde",
         tarjeta_guardada : "Tarjeta guardada" ,
         tarjeta_guardada_detalle : "Su tarjeta ha sido guardada, muchas gracias por su confianza." ,
-        metodo_pago: "Metodo de pago",
+        metodo_pago: "Tu tarjeta guardada",
         borrar_metodo_pago: "Borrar metodo de pago",
         borrado_metodo_pago:"Metodo de pago borrado",
         error_borrar_metodo_pago:"Error al borrar el metodo de pago, intentelo de nuevo.",
         add_tarjeta: "Añadir tarjeta",
-        sin_metodo_pago:"No se ha encontrando ningun metodo de pago.",
+        guarda_tu_tarjeta:"Guarda tu tarjeta",
+        msg_guarda_tarjeta: "Podrás usarla para pagar tus pedidos",
         
 
         //Order Confirmation Screen

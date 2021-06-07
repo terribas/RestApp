@@ -4,6 +4,7 @@ import {CardView} from 'react-native-credit-card-input';
 import CreditCardInputs from 'src/components/CreditCardInputs';
 import CreditCardViews from 'src/components/CreditCardViews';
 import Buttons from 'src/components/Buttons';
+import Texts from 'src/components/Texts';
 import apiAuthFetch from 'src/services/apiAuthFetch';
 import useSavedCards from 'src/hooks/useSavedCards';
 import LoadingScreen from 'src/screens/status/LoadingScreen';
@@ -126,31 +127,43 @@ export default function PaymentMethodScreen({navigation, route}) {
         const expiry = exp_month + "/" + exp_year;
 
         return (
-            <View>
-              <Text>{tr("metodo_pago")}</Text>
-              <CreditCardViews
-                  number={cardNumber}
-                  expiry={expiry}
-                  brand={brand}
-              />
+            <View style={styles.container}>
+
+              <View style={styles.marginContainer}>
+                <Texts h3 center semibold>{tr("metodo_pago")}</Texts>
+              </View>
+
+              <View style={styles.cardContainer}>
+                <CreditCardViews
+                    number={cardNumber}
+                    expiry={expiry}
+                    brand={brand}
+                />
+              </View>
               
+              <View style={styles.marginContainer}>
               <Buttons
                   title={tr("borrar_metodo_pago")}
                   loading={loadingBt}
                   onPress={deleteCard}
                   //onPress={() => {console.log(last4)}}
               />
+              </View>
             </View>
         );
     } else {
       return(
-        <View>
+        <View style={styles.container}>
 
-          <Text>{tr("sin_metodo_pago")}</Text>
+          <View style={styles.marginContainer}>
+            <Texts h3 semibold>{tr("guarda_tu_tarjeta")}</Texts>
+            <Texts h5>{tr("msg_guarda_tarjeta")}</Texts>
+          </View>
 
           <CreditCardInputs onChange={setCardInput} />
 
-          <View style={styles.buttonContainer}>
+          <View style={{marginTop: 15}} />
+          <View style={styles.marginContainer}>
               <Buttons
                   title={tr("add_tarjeta")}
                   disabled={!cardInput?.valid}
@@ -172,10 +185,17 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'white',
+        
     },
 
-    buttonContainer: {
+    marginContainer: {
+        marginTop: 16,
+        marginBottom: 16,
         marginLeft: 16,
         marginRight: 16
+    },
+
+    cardContainer: {
+      alignItems: 'center',
     }
 });

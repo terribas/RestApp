@@ -108,7 +108,7 @@ export default function Register({navigation, route}) {
                 placeholder={tr("pw_registro")}
                 leftIcon='lock'
                 rightIcon='close'
-                label='Contraseña'
+                label={tr("pw")}
                 value={password}
                 onChangeText={setPassword}
                 isPassword
@@ -121,7 +121,7 @@ export default function Register({navigation, route}) {
                 placeholder={tr("repw_registro")}
                 leftIcon='lock-outline'
                 rightIcon='close'
-                label='Repite contraseña'
+                label={tr("repw_registro")}
                 isPassword
                 value={passwordRepeat}
                 onChangeText={setPasswordRepeat}

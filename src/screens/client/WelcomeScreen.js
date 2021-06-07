@@ -9,8 +9,10 @@ import Buttons from 'src/components/Buttons';
 import {useMyProfile} from 'src/hooks/useMyProfile';
 import ClientOrderListItem from 'src/components/items/client/ClientOrderListItem';
 import ClientProductPreviewListItem from 'src/components/items/client/ClientProductPreviewListItem';
+import useProductContext from 'src/hooks/useProductContext';
 import tr from 'src/language/utils';
 
+/*
 const randomProducts = [
     {
         "zone": 2,
@@ -39,7 +41,7 @@ const randomProducts = [
         "image_url": "https://www.hola.com/imagenes/cocina/recetas/2016033184797/pulpo-gallega/0-805-441/pulpo-a-la-gallega-con-cachelos-m.jpg",
     },
 ]
-
+*/
 
 
 export default function WelcomeScreen({navigation, route}) {
@@ -48,7 +50,7 @@ export default function WelcomeScreen({navigation, route}) {
     const [waiterCalled, setWaiterCalled] = useState(false);
     const {logOut, tokenState} = useAuthContext()
     const {isLoading, isSuccess, data: user} = useMyProfile();
-
+    const {isLoading: productsLoading, isSuccess: productsSuccess, products} = useProductContext();
 
     useFocusEffect(
         useCallback(() => {
@@ -64,6 +66,8 @@ export default function WelcomeScreen({navigation, route}) {
             getLastOrders();
         }, [])
     );
+
+
 
 
     async function callWaiter() {
@@ -88,7 +92,6 @@ export default function WelcomeScreen({navigation, route}) {
     return (
         
         <View style={styles.container}>
-        
             <View style={styles.topContainer}>
             <ScrollView style={{flex: 1}}>
             <View style={{marginTop: 15}} />
@@ -124,7 +127,7 @@ export default function WelcomeScreen({navigation, route}) {
             <View style={{marginTop: 10}} />
             <FlatList
                 horizontal={true}
-                data={randomProducts}
+                data={products?.filter(product => product.zone != 1).sort(() => 0.5 - Math.random()).slice(0,5)}
                 renderItem={({item}) => (
                     <ClientProductPreviewListItem product={item}/>
                 )}

@@ -23,7 +23,12 @@ import WaiterChangePasswordScreen from './waiter/WaiterChangePasswordScreen';
 const RootWaiterStack = createStackNavigator();
 function RootWaiterStackScreen() {
     return (
-        <RootWaiterStack.Navigator>
+        <RootWaiterStack.Navigator screenOptions={{
+            headerTitleStyle: {
+                fontFamily: 'Montserrat-Bold',
+                fontWeight: 'bold',
+            }
+        }}>
             <RootWaiterStack.Screen name={SCREEN.WAITER_TABLES_LIST} component={TablesScreen} options={{title: tr("tab_bar_mesas")}} />
             <RootWaiterStack.Screen name={SCREEN.WAITER_TABLE_DETAILS} component={TableDetailsScreen} options={{title: tr("mesa")}} />
             <RootWaiterStack.Screen name={SCREEN.WAITER_PRODUCTS} component={ProductsScreen} options={{title: tr("comanda")}} />
@@ -38,9 +43,14 @@ function RootWaiterStackScreen() {
 const RootSettingsStack = createStackNavigator();
 function RootSettingsStackScreen() {
     return (
-        <RootSettingsStack.Navigator>
-            <RootWaiterStack.Screen name={SCREEN.WAITER_SETTINGS} component={SettingsScreen} />
-            <RootWaiterStack.Screen name={SCREEN.WAITER_CHANGE_PASSWORD} component={WaiterChangePasswordScreen} />
+        <RootSettingsStack.Navigator screenOptions={{
+            headerTitleStyle: {
+                fontFamily: 'Montserrat-Bold',
+                fontWeight: 'bold',
+            }
+        }}>
+            <RootWaiterStack.Screen name={SCREEN.WAITER_SETTINGS} component={SettingsScreen} options={{title: tr("tab_bar_perfil")}}/>
+            <RootWaiterStack.Screen name={SCREEN.WAITER_CHANGE_PASSWORD} component={WaiterChangePasswordScreen} options={{title: tr("cambiar_pw")}}/>
         </RootSettingsStack.Navigator>
     );
 }
@@ -57,7 +67,17 @@ const Tab = createBottomTabNavigator();
 export default function WaiterLoggedInScreens() {
     return (
         <TableContextProvider>
-            <Tab.Navigator>
+            <Tab.Navigator tabBarOptions={{
+            
+                labelStyle: {
+                    //color: '#fff',
+                    fontFamily: 'Montserrat-SemiBold',
+                    fontSize: 11
+                },
+
+                activeTintColor: '#741922',
+                
+            }}>
                 <Tab.Screen
                     name='WaiterTab'
                     component={RootWaiterStackScreen}

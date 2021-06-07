@@ -268,14 +268,15 @@ export default function PaymentScreen({navigation, route}) {
           <CreditCardInputs
               onChange={setCardInput}
           />
-          <View style={{marginTop: 70}} />
-              <CheckBox
-                  checked={isSelected}
-                  onPress={() => {setIsSelected(!isSelected)} }
-                  title={tr("guardar_tarjeta")}
-                  />   
+          <View style={{marginTop: 20}} />
+          <CheckBox
+              checked={isSelected}
+              onPress={() => {setIsSelected(!isSelected)} }
+              title={tr("guardar_tarjeta")}
+          />
+          <View style={{marginTop: 30}} />
           <View style={styles.buttonContainer}>
-              <Buttons title={tr("pagar")} onPress={handleOnPayPress} disabled={!cardInput?.valid} loading={paying}/>
+              <Buttons title={tr("pagar") + ' ' + total.toFixed(2) + ' €'} onPress={handleOnPayPress} disabled={!cardInput?.valid} loading={paying}/>
           </View>
       </View>
       );

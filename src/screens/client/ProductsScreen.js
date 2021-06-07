@@ -58,6 +58,7 @@ export default function ProductsScreen({navigation, route}) {
         setCart([]);
         if (isSuccess) {
             const cats = [];
+            products.sort((a, b) => (a.zone - b.zone))
             products.forEach(product => {
                 product.amount = 0;
                 if (!cats.some(cat => cat === product.category)) {
@@ -68,6 +69,8 @@ export default function ProductsScreen({navigation, route}) {
             const productsCopy = [...products];
             setCart(productsCopy);
             
+            cats.push('Pizzas');
+            cats.push('Meats')
             setCategories(cats);
             setSelectedCategory(cats[0]);
         }

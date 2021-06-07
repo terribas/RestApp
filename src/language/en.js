@@ -16,7 +16,7 @@ export default {
         registro:'Register',
         comanda:"Command",
         confirmar_comanda:"Confirm command",
-
+        
 
 
     //<----Generic Strings END
@@ -39,6 +39,7 @@ export default {
         crea_cuenta:"Create your account on RestApp",
         tus_datos:"Your data",
         pw_registro:"Create your password",
+        pw: "Password",
         registro_ok:"Your account has been created succesfully",
         registro_error:"Error creating account. Check it doesn't exists.",
         dropitem_friend: "A friend",
@@ -114,9 +115,16 @@ export default {
         apellidos: "Last Name",
         email_valido: "Enter a valid Email",
         actualizar: "Update",
-        rellenar_campos: "You must fullfill all the camps.",
+        rellenar_campos: "You must fullfill all the fields.",
         actualizar_perfil_error:"Error on updating profile",
         actualizar_perfil_ok:"Your profile has been updated successfully",
+
+
+        // Order list screen
+        cargando_pedidos: "Retrieving your orders...",
+        error_cargando_pedidos: "Error retrieving your orders. Try again later",
+        tus_pedidos: "Your order history:",
+
 
         //Scan Screen
         escanea_qr: "Scan the QR Code from your table",
@@ -143,7 +151,7 @@ export default {
         cvc:"CVC",
         numero_placeholder:"4242 4242 4242 4242",
         validez_placeholder: "MM/YY",
-        guardar_tarjeta:"Do you want to add your card for future payments?",
+        guardar_tarjeta:"Do you want to save this card for future payments?",
         pagar:"Pay",
 
         //Payment Method Screen
@@ -154,11 +162,12 @@ export default {
         error_guardar_detalle:"There was an error saving the card. Try it again later",
         tarjeta_guardada : "Saved Card" ,
         tarjeta_guardada_detalle : "Your card has been saved. Thank you!" ,
-        metodo_pago: "Payment method",
+        metodo_pago: "Your saved card",
         borrar_metodo_pago: "Delete payment method",
         borrado_metodo_pago:"Payment method deleted",
         error_borrar_metodo_pago:"Error deleting payment method, try it again.",
-        sin_metodo_pago:"No payment method was found.",
+        guarda_tu_tarjeta: "Save your card",
+        msg_guarda_tarjeta: "You'll be able to pay your orders with it",
 
         add_tarjeta: "Add payment method",
         
@@ -175,7 +184,7 @@ export default {
         pw_nueva:"New password",
         re_pw_nueva:"Repeat new password",
         cambiar_pw:"Change password",
-        min_char_1:"The new password must atleast have ",
+        min_char_1:"New password must be at least ",
         min_char_2:" characters",
 
     //<---- Client Screens END

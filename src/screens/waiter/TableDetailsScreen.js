@@ -11,7 +11,7 @@ import useTableContext from 'src/hooks/useTableContext';
 import useTableOrders from 'src/hooks/useTableOrders';
 
 
-import apiAuthfetch from 'src/services/apiAuthFetch';
+import apiAuthFetch from 'src/services/apiAuthFetch';
 import tr from 'src/language/utils';
 
 
