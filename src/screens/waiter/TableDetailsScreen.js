@@ -30,7 +30,7 @@ export default function TableDetailsScreen({navigation, route}) {
 
 
     useLayoutEffect(function() {
-        console.log('uselayouteffect');
+        //console.log('uselayouteffect');
         navigation.setOptions({
             title: tr("mesa")+" " + table.table_number
         });
@@ -39,7 +39,7 @@ export default function TableDetailsScreen({navigation, route}) {
 
     useEffect(function() {
         async function turnStatus() {
-            console.log('el token es ' + tokenState);
+            //console.log('el token es ' + tokenState);
             await apiAuthFetch(`/table/turn/${table._id}`, {method: 'POST'});
             invalidateTableListCache();
         }
@@ -79,9 +79,6 @@ export default function TableDetailsScreen({navigation, route}) {
                         )}
                     />
                 }
-
-
-
             </View>
 
             <View style={styles.buttonsContainer}>

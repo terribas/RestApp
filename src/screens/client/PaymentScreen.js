@@ -60,13 +60,13 @@ export default function PaymentScreen({navigation, route}) {
     setPaying(true)
     let amount = total.toString()
     amount = amount * 100
-    console.log(amount)
+    //console.log(amount)
     let cant = parseInt(amount)
-    console.log("pay")
-    console.log(amount)
+    //console.log("pay")
+    //console.log(amount)
     const paymentMethodId = card.paymentMethods.data[0].id
-    console.log("Estoy en PAY WITH SAVED CARD")
-    console.log(paymentMethodId)
+    //console.log("Estoy en PAY WITH SAVED CARD")
+    //console.log(paymentMethodId)
     const options = {
       method: 'POST',
       body: JSON.stringify({
@@ -77,7 +77,7 @@ export default function PaymentScreen({navigation, route}) {
     const response = await apiAuthFetch("/payment/payWithCard", options)
     const json = await response.json()
     if(json.error){
-      console.log("Error en Pago")
+      //console.log("Error en Pago")
       Alert.alert(
         tr("error_pago"),
         tr("error_pago_detalle"),
@@ -86,7 +86,7 @@ export default function PaymentScreen({navigation, route}) {
       setPaying(false)
       
     } else if (json.success) {
-      console.log("PAGO OK")
+      //console.log("PAGO OK")
       /*Alert.alert(
         "Pago correcto",
         "Su pedido se ha realizado. Muchas gracias",
@@ -120,17 +120,17 @@ export default function PaymentScreen({navigation, route}) {
       // Handle error
     } else if (paymentMethod) {
       const paymentMethodId = paymentMethod.id;
-      console.log("--------------------------")
-      console.log(paymentMethodId)
+      //console.log("--------------------------")
+      //console.log(paymentMethodId)
       // Send the ID of the PaymentMethod to your server for the next step
       // ...
-      console.log("number")
+      //console.log("number")
       let amount = total.toString()
       amount = amount * 100
-      console.log(amount)
+      //console.log(amount)
       let cant = parseInt(amount)
       //cant = cant *100
-      console.log(cant)
+      //console.log(cant)
       const options = {
         method: 'POST',          
         body: JSON.stringify({
@@ -141,10 +141,10 @@ export default function PaymentScreen({navigation, route}) {
       try{
         const response = await apiAuthFetch('/payment/pay', options)
         const json = await response.json()
-        console.log("response")
-        console.log(json)
+        //console.log("response")
+        //console.log(json)
         if(json.error){
-          console.log("Error en Pago")
+          //console.log("Error en Pago")
           Alert.alert(
             tr("error_pago"),
             tr("error_pago_detalle"),
@@ -152,27 +152,14 @@ export default function PaymentScreen({navigation, route}) {
           );
           setPaying(false)
         } else if (json.success) {
-          console.log("PAGO OK")
-          /*Alert.alert(
-            "Pago correcto",
-            "Su pedido se ha realizado. Muchas gracias",
-            [{ text: "OK" }]
-          );*/
-
-          //PETICION PEDIDO
-
-
-
+          //console.log("PAGO OK")
           if (isSelected){
             console.log("Guardar tarjeta")
             saveCard()
           } else{
             setPaying(false)
           }
-
           sendOrder({table, total, products: cart});
-
-
         } else {
           Alert.alert(
             tr("error_pago"),
@@ -181,10 +168,9 @@ export default function PaymentScreen({navigation, route}) {
           ); 
           setPaying(false)
         }
-
       } catch(error){
-        console.log(error)
-        console.log("error de conexion (pago)")
+        //console.log(error)
+        //console.log("error de conexion (pago)")
         Alert.alert(
           tr("error_pago"),
           tr("error_pago_detalle"),
@@ -196,7 +182,7 @@ export default function PaymentScreen({navigation, route}) {
   }; 
 
   async function saveCard() {
-    console.log('saveCard');
+    //console.log('saveCard');
     const { paymentMethod, error } = await createPaymentMethod();
     const options = {
       method: 'POST',
@@ -207,8 +193,6 @@ export default function PaymentScreen({navigation, route}) {
     const response = await apiAuthFetch("/payment/save_card_v2", options)
     setPaying(false)
   }
-
-
 
   async function createPaymentMethod() {
     const number = cardInput.values.number.replace(/\s/g,"")
@@ -223,7 +207,7 @@ export default function PaymentScreen({navigation, route}) {
       cvc: cvc,
     }
   
-    console.log("creando payment method")
+    //console.log("creando payment method")
     const options = {
       method: 'POST',
       body: JSON.stringify({card})
@@ -231,15 +215,15 @@ export default function PaymentScreen({navigation, route}) {
     try{
       const response = await apiAuthFetch('/payment/createPaymentMethod', options)
       if(!response.ok){
-        console.log("Error en createpaymentmethod")
+        //console.log("Error en createpaymentmethod")
       } else {
-        console.log("todo ok en crear metodo de pago")
+       //console.log("todo ok en crear metodo de pago")
         return await response.json()
       }
 
     } catch(error){
-      console.log(error)
-      console.log("error de conexion")
+      //console.log(error)
+      //console.log("error de conexion")
     }
   }
 
@@ -257,18 +241,17 @@ export default function PaymentScreen({navigation, route}) {
   } else if (card.tarjeta){
       return(
         <View style={styles.container}>
-      <View style={styles.centerContainer}>
-          <View style={{marginTop: 20}} />
-          <Texts h4>{tr("pagar_tarjeta_1")} {total.toFixed(2)} {tr("pagar_tarjeta_2")} {card.paymentMethods.data[0].card.last4}</Texts>
-          <View style={{marginTop: 10}} />
-          <Texts h4 semibold>{tr("pagar_tarjeta_3")}</Texts>
-          
-          <View style={{marginTop: 20}} />
-          <Buttons title={tr("aceptar")} onPress={handlePayWithSavedCard} loading={paying} />
-          <View style={{marginTop: 15}} />
-          <Buttons title={tr("cancelar")} disabled={paying} onPress={handleCancel} type='outline'/>
-      </View>
-      </View>
+          <View style={styles.centerContainer}>
+            <View style={{marginTop: 20}} />
+            <Texts h4>{tr("pagar_tarjeta_1")} {total.toFixed(2)} {tr("pagar_tarjeta_2")} {card.paymentMethods.data[0].card.last4}</Texts>
+            <View style={{marginTop: 10}} />
+            <Texts h4 semibold>{tr("pagar_tarjeta_3")}</Texts>  
+            <View style={{marginTop: 20}} />
+            <Buttons title={tr("aceptar")} onPress={handlePayWithSavedCard} loading={paying} />
+            <View style={{marginTop: 15}} />
+            <Buttons title={tr("cancelar")} disabled={paying} onPress={handleCancel} type='outline'/>
+          </View>
+        </View>
       )
   } else{
   return (

@@ -33,7 +33,6 @@ function RootWaiterStackScreen() {
             <RootWaiterStack.Screen name={SCREEN.WAITER_TABLE_DETAILS} component={TableDetailsScreen} options={{title: tr("mesa")}} />
             <RootWaiterStack.Screen name={SCREEN.WAITER_PRODUCTS} component={ProductsScreen} options={{title: tr("comanda")}} />
             <RootWaiterStack.Screen name={SCREEN.WAITER_CONFIRM_ORDER} component={OrderConfirmationScreen} options={{title: tr("confirmar_comanda")}} />
-            
         </RootWaiterStack.Navigator>
     );
 }

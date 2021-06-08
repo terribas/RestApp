@@ -46,7 +46,7 @@ export default function ProductsScreen({navigation, route}) {
 
 
     function setProductInCart(id, amount) {
-        console.log('he entrado en setproduct');
+        //console.log('he entrado en setproduct');
 
         const cartCopy = [...cart];
         for (var i in cartCopy) {
@@ -56,7 +56,7 @@ export default function ProductsScreen({navigation, route}) {
             }
         }
         
-        console.log(cartCopy);
+        //console.log(cartCopy);
         setCart(cartCopy);
     }
 
@@ -67,7 +67,7 @@ export default function ProductsScreen({navigation, route}) {
 
         const cleanCart = cartCopy.filter(product => (product.amount > 0));
 
-        console.log('carrito limpio ' + JSON.stringify(cleanCart));
+        //console.log('carrito limpio ' + JSON.stringify(cleanCart));
 
         navigation.navigate(WAITER_CONFIRM_ORDER, {
             table: table,

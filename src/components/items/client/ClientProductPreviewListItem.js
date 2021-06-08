@@ -1,15 +1,12 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {Image} from 'react-native-elements';
-
-
 export default function ClientProductPreviewListItem({product}) {
     return (
         <View style={styles.container}>
             <View style={styles.topContainer}>
                 <Image source={{uri: product.image_url}} style={styles.image}/>
             </View>
-
             <View style={styles.bottomContainer}>
                 <Text style={styles.titleText}>{product.name}</Text>
             </View>

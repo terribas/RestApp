@@ -58,18 +58,13 @@ export default function WelcomeScreen({navigation, route}) {
                 const response = await apiAuthFetch('/order/myLastOrder', {method: 'POST'});
                 if (response.ok) {
                     const json = await response.json();
-                    console.log(json);
-                    
+                    //console.log(json);      
                     setLastOrder(json);
                 }
             }
             getLastOrders();
         }, [])
     );
-
-
-
-
     async function callWaiter() {
         await apiAuthFetch(`/table/turn/${lastOrder?.table._id}`, {method: 'POST'});
     }
@@ -85,10 +80,6 @@ export default function WelcomeScreen({navigation, route}) {
     function handleOnOrderPress() {
         navigation.navigate(CLIENT_SCAN);
     }
-
-
-
-
     return (
         
         <View style={styles.container}>
@@ -96,31 +87,16 @@ export default function WelcomeScreen({navigation, route}) {
             <ScrollView style={{flex: 1}}>
             <View style={{marginTop: 15}} />
             <Texts h2 semibold>{tr("bienvenido")}, {user?.name}</Texts>
-
-            
-            
-            
             {lastOrder ?
                 <View>
                 <View style={{marginTop: 10}} />  
                 <Texts h4 bold color='gray'>{tr("ultimo_pedido")}</Texts>
-
-                {/*
-                <FlatList data={lastOrder}
-                    keyExtractor={item => item._id}
-                    renderItem={({item}) => (<ClientOrderListItem order={item} />)}
-                />*/}
-
                 <ClientOrderListItem order={lastOrder} />
-
                 {new Date(lastOrder.date).getTime() > Date.now() - 1000 * 60 * 30 &&
                     <Buttons title={tr("necesito_ayuda")} type='outline' onPress={handleOnCallWaiter} disabled={waiterCalled}/>
                 }
-                
-                
                 </View>
             : <></>}
-            
             <View style={{marginTop: 20}} />
             <Texts h3 semibold >{tr("con_hambre")}</Texts>
             <Texts h5 semibold color='gray'>{tr("algunos_productos")}</Texts>
@@ -134,18 +110,12 @@ export default function WelcomeScreen({navigation, route}) {
                 keyExtractor={item => item.name}
                 showsHorizontalScrollIndicator={false}
             />
-        
-            
             </ScrollView>
             </View>
-
-
             <View style={styles.bottomContainer}>
                 <Buttons onPress={handleOnOrderPress} title={tr("hacer_pedido")} />
             </View>
-            
         </View>
-        
     );
 }
 

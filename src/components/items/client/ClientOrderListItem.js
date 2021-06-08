@@ -24,8 +24,6 @@ export default function ClientOrderListItem({order}) {
             return (day < 10 ? '0' : '') + day + '/' + (month < 10 ? '0' : '') + month + ' ' + (hh < 10 ? '0' : '') + hh + ':' + (mm < 10 ? '0' : '') + mm;
         }
     }
-
-
     return (
         <View style={styles.container}>
             <View style={styles.titleContainer}>
@@ -33,25 +31,20 @@ export default function ClientOrderListItem({order}) {
                     <MaterialCommunityIcons name='table-chair' style={{fontSize: 20}}/>
                     <Text style={styles.titleText}>  {tr("mesa")} {order.table.table_number}</Text>
                 </View>
-
                 <View style={styles.dateContainer}>
                     <Text style={styles.dateText}>{theDate()} </Text>
                     <MaterialCommunityIcons name='calendar-range' style={{fontSize: 20}}/>
-                </View>
-                
+                </View>      
             </View>
-
             <View style={styles.productsContainer}>
                 {productsOrdered.map((product) => (
                     <View style={styles.itemContainer}>
                         <View style={styles.amountContainer}>
                             <Text style={styles.amountText}>{product?.amount + ''}</Text>
                         </View>
-
                         <View style={styles.productContainer}>
                             <Text style={styles.productText}>{product?.name}</Text>
                         </View>
-
                         <View style={styles.priceContainer}>
                             <Text style={styles.priceText}>
                                 {(product?.price * product?.amount).toFixed(2) + ' €'}
@@ -59,7 +52,6 @@ export default function ClientOrderListItem({order}) {
                         </View>
                     </View>
                 ))}
-
                 <View style={styles.itemContainer}>
                     <View style={styles.totalContainer}>
                         <Text style={styles.totalText}>Total:</Text>
@@ -69,7 +61,6 @@ export default function ClientOrderListItem({order}) {
                     </View>
                 </View>
             </View>
-
         </View>
     );
 }

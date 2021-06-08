@@ -8,8 +8,6 @@ import {CLIENT_LOGGED_IN, WAITER_LOGGED_IN, LOADING} from 'src/contexts/AuthCont
 import LoadingScreen from 'src/screens/status/LoadingScreen';
 import tr from 'src/language/utils';
 
-
-
 export default function SwitchAuthScreens(props) {
 
     const {loggedState} = useAuthContext();

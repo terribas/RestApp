@@ -17,21 +17,6 @@ export default function LoginScreen({navigation, route}) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const {clientLogin, waiterLogin} = useAuthContext();
-
-
-
-    /*function handleOnLoginPress() {
-        if (email === 'client') {
-
-    function handleOnLoginPress() {
-        if (email === 'client' || email === 'Client')  {
-
-            clientLogin('token del cliente');
-        } else {
-            waiterLogin('token del camarero');
-        }
-    } */
-
     //  Se conecta al servidor.
     async function handleOnLoginPress() {
 
@@ -45,7 +30,6 @@ export default function LoginScreen({navigation, route}) {
             },
             body: JSON.stringify(postData)
         }
-
         try {
             const response = await fetch(`${API_URL}/auth/login`, options);
 
@@ -53,7 +37,6 @@ export default function LoginScreen({navigation, route}) {
                 Alert.alert(tr("user_pw_invalido"));
             } else {
                 const {token, role} = await response.json();
-                
                 if (role === 'waiter') {
                     waiterLogin(token);
                 } else {
@@ -65,15 +48,9 @@ export default function LoginScreen({navigation, route}) {
         }
     }
     
-
-
     function handleOnRegisterPress() {
         navigation.navigate(REGISTER);
     }
-
-
-
-
     return (
         <ScrollView style={{backgroundColor: 'white'}}>
             <View style={styles.container}>
@@ -81,12 +58,9 @@ export default function LoginScreen({navigation, route}) {
                     source={require('assets/logo/vertical.png')}
                     resizeMode='center'
                     style={styles.image}/>
-
                 <Texts h1 semibold center>{tr("bienvenido")}</Texts>
                 <Texts h4 center>{tr("inicia_sesion_cuenta")}</Texts>
-
                 <View style={{marginTop: 20}} />
-                
                 <Inputs
                     placeholder={tr("email")}
                     leftIcon="mail-outline"
@@ -95,7 +69,6 @@ export default function LoginScreen({navigation, route}) {
                     value={email}
                     onChangeText={setEmail}
                 />
-
                 <Inputs
                     placeholder={tr("pw")}
                     leftIcon="lock"
@@ -103,8 +76,6 @@ export default function LoginScreen({navigation, route}) {
                     value={password}
                     onChangeText={setPassword}
                 />
-                
-
                 <View style={{marginTop: 25}} />
 
                 <View style={styles.buttonsContainer}>
@@ -112,14 +83,9 @@ export default function LoginScreen({navigation, route}) {
                         title={tr("iniciar_sesion")}
                         onPress={handleOnLoginPress}
                     />
-
                     <View style={{marginTop: 15}} />
-
-                    
                     <Texts h5 center>{tr("sin_cuenta")}</Texts>
-
                     <View style={{marginTop: 5}} />
-
                     <Buttons
                         title={tr("registrate")}
                         type='outline'
@@ -128,13 +94,8 @@ export default function LoginScreen({navigation, route}) {
                 </View>
             </View>
         </ScrollView>
-        
     );
-    
 }
-
-
-
 const styles = StyleSheet.create({
 
 

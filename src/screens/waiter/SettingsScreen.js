@@ -15,13 +15,8 @@ const options = [
     screen: WAITER_CHANGE_PASSWORD
   }
 ]
-
-
-
 export default function ProfileScreen({navigation, route}) {
-
     const {logOut} = useAuthContext();
-
     function handleOnLogout() {
         Alert.alert(tr("cerrar_sesion"), tr("confirma_cerrar_sesion"), [
             {

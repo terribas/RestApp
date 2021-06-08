@@ -13,9 +13,6 @@ import WaiterTableListItem from 'src/components/items/waiter/WaiterTableListItem
 
 
 export default function TablesScreen({navigation, route}) {
-
-    
-    
     const {logOut} = useAuthContext();
     const {isSuccess, isLoading, tables} = useTableContext();
 

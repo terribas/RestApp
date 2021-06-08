@@ -1,6 +1,4 @@
 export default {
-    calvo: 'Calvo',
-
     //Generic String START----> 
         aceptar:"Aceptar",
         cancelar:"Cancelar",

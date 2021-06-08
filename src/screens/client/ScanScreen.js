@@ -22,7 +22,7 @@ export default function ScanScreen({navigation, route}) {
     }
 
     function onRead(code) {
-        console.log("Datos del qr: "+e.data);
+        //console.log("Datos del qr: "+e.data);
         navigation.navigate(CLIENT_PRODUCTS,{
             table: code.data,
         });

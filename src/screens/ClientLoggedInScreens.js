@@ -2,32 +2,25 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import * as SCREEN from 'src/consts/screens';
-
-
 import WelcomeScreen from 'src/screens/client/WelcomeScreen';
 import ScanScreen from 'src/screens/client/ScanScreen';
 //import CategoriesScreen from 'src/screens/client/CategoriesScreen';
 import ProductsScreen from 'src/screens/client/ProductsScreen';
 import OrderConfirmationScreen from 'src/screens/client/OrderConfirmationScreen';
 import PaymentScreen from 'src/screens/client/PaymentScreen';
-
 import ProfileScreen from 'src/screens/client/ProfileScreen';
 import EditProfileScreen from 'src/screens/client/EditProfileScreen';
 import PaymentMethodScreen from 'src/screens/client/PaymentMethodScreen';
 import ChangePasswordScreen from 'src/screens/client/ChangePasswordScreen';
 import OrderListScreen from 'src/screens/client/OrderListScreen';
-
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import tr from 'src/language/utils';
-
 
 const Tab = createBottomTabNavigator();
 
 
 const OrderRootStack = createStackNavigator();
 const ProfileRootStack = createStackNavigator();
-
-
 
 function OrderRootStackScreen() {
     return (
@@ -46,7 +39,6 @@ function OrderRootStackScreen() {
     );
 }
 
-
 function ProfileRootStackScreen() {
     return (
         <ProfileRootStack.Navigator screenOptions={{
@@ -63,8 +55,6 @@ function ProfileRootStackScreen() {
     );
 }
 
-
-
 export default function ClientLoggedInScreens() {
     return (
         <Tab.Navigator tabBarOptions={{
@@ -76,7 +66,6 @@ export default function ClientLoggedInScreens() {
             },
 
             activeTintColor: '#741922',
-            
         }}
         >
             <Tab.Screen

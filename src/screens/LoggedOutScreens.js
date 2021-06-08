@@ -7,8 +7,6 @@ import RegisterScreen from 'src/screens/loggedOut/RegisterScreen';
 import tr from 'src/language/utils';
 
 const LoggedOutStack = createStackNavigator();
-
-
 export default function LoggedOutScreens() {
     return (
         <LoggedOutStack.Navigator>

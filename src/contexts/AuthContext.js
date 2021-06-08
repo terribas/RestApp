@@ -53,7 +53,6 @@ export function AuthContextProvider({children}) {
     const [tokenState, tokenDispatch] = useReducer(tokenStateReducer, '');
     const [authState, authDispatch] = useReducer(authStateReducer, LOADING);
     
-
     const clientLogin = useCallback((authToken) => {
         storage.set(APP_LOGGED_KEY, CLIENT_LOGGED_IN);
         storage.set(AUTH_TOKEN_KEY, authToken);

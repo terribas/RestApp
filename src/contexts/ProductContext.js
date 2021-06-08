@@ -14,9 +14,7 @@ async function fetchData() {
     return json;
 }
 
-
 export function ProductContextProvider({children}){
-
 
     const {isSuccess, isLoading, data} = useQuery(GET_PRODUCTS, fetchData);
 

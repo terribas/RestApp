@@ -92,7 +92,7 @@ export default function ProductsScreen({navigation, route}) {
 
         const cleanCart = cartCopy.filter(product => (product.amount > 0));
 
-        console.log('carrito limpio ' + JSON.stringify(cleanCart));
+        //console.log('carrito limpio ' + JSON.stringify(cleanCart));
 
         navigation.navigate(CLIENT_CONFIRM_ORDER, {
             table: table,

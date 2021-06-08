@@ -9,7 +9,6 @@ import LoadingScreen from 'src/screens/status/LoadingScreen';
 import DropDownPicker from 'react-native-dropdown-picker';
 import tr from 'src/language/utils';
 
-
 const dropdownItems = [
     {label: tr("dropitem_friend"), value: 'Friends'},
     {label: tr("dropitem_internet"), value: 'Internet Ad'},
@@ -19,8 +18,6 @@ const dropdownItems = [
     {label: tr("dropitem_tv"), value: 'TV'},
     {label: tr("dropitem_other"), value: 'Others'},
 ]
-
-
 const emailRegex = /\S+@\S+\.\S+/;
 
 async function postRegister({name, lastName, email, password, referral}) {
@@ -29,9 +26,6 @@ async function postRegister({name, lastName, email, password, referral}) {
     const json = await response.json();
     return json;
 }
-
-
-
 export default function Register({navigation, route}) {
 
     const [name, setName] = useState('');
@@ -53,18 +47,13 @@ export default function Register({navigation, route}) {
             Alert.alert(tr("registro_error"));
         }
     });
-
-    
     return (
         <ScrollView style={styles.scrollView}>
         <View style={styles.container}>
-
             <View style={{marginTop: 30}}/>
             <Image style={styles.logo} source={require('assets/logo/single.png')}/>
             <View style={{marginTop: 10}}/>
             <Texts h3 center semibold>{tr("crea_cuenta")}</Texts>
-        
-            
             <View style={{marginTop: 40}} />
             <View style={styles.leftContainer}><Texts h4 semibold color='gray'>{tr("tus_datos")}</Texts></View>
             <View style={{marginTop: 5}} />
@@ -76,7 +65,6 @@ export default function Register({navigation, route}) {
                 value={name}
                 onChangeText={setName}
             />
-
             <View style={{marginTop: 5}} />
             <Inputs
                 placeholder={tr("apellidos")}
@@ -86,9 +74,6 @@ export default function Register({navigation, route}) {
                 value={lastName}
                 onChangeText={setLastName}
             />
-
-
-
             <View style={{marginTop: 20}} />
             <View style={styles.leftContainer}><Texts h4 semibold color='gray'>{tr("tu_inicio_sesion")}</Texts></View>
             <View style={{marginTop: 5}} />
@@ -101,8 +86,6 @@ export default function Register({navigation, route}) {
                 onChangeText={setEmail}
                 errorMessage={email.length > 0 && !emailRegex.test(email) ? tr("email_valido") : ''}
             />
-
-
             <View style={{marginTop: 5}} />
             <Inputs
                 placeholder={tr("pw_registro")}
@@ -112,10 +95,7 @@ export default function Register({navigation, route}) {
                 value={password}
                 onChangeText={setPassword}
                 isPassword
-                
             />
-
-
             <View style={{marginTop: 5}} />
             <Inputs
                 placeholder={tr("repw_registro")}
@@ -127,7 +107,6 @@ export default function Register({navigation, route}) {
                 onChangeText={setPasswordRepeat}
                 errorMessage={passwordRepeat.length > 0 && passwordRepeat !== password ? tr("pw_distinta") : ''}
             />
-
             <View style={{marginTop: 10}} />
             <View style={styles.leftContainer}><Texts h4 semibold color='gray'>{tr("como_conociste")}</Texts></View>
             <DropDownPicker
@@ -141,8 +120,6 @@ export default function Register({navigation, route}) {
                 containerStyle={{width: '85%' }}
                 textStyle={{ fontFamily: 'Montserrat-Regular' }}
             /> 
-
-            
             <View style={styles.buttonContainer}>
                 <Buttons
                     title={tr("registrate")}

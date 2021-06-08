@@ -41,16 +41,16 @@ export default function PaymentMethodScreen({navigation, route}) {
         try{    
           const response = await apiAuthFetch("/payment/createPaymentMethod", options)
           if(!response.ok){
-            console.log("Error en createpaymentmethod")
+            //console.log("Error en createpaymentmethod")
             throw Error;
           } else {
-            console.log("todo ok en crear metodo de pago")
+            //console.log("todo ok en crear metodo de pago")
             return await response.json()
           }
   
         } catch(error){
-          console.log(error)
-          console.log("error de conexion")
+          //console.log(error)
+          //console.log("error de conexion")
           Alert.alert(
             tr("error_conexion"),
             tr("error_conexion_detalle")
@@ -62,7 +62,7 @@ export default function PaymentMethodScreen({navigation, route}) {
 
     async function saveCard() {
       setLoadingBt(true)
-      console.log('saveCard');
+      //console.log('saveCard');
       const { paymentMethod, error } = await createPaymentMethod();
       const options = {
         method: 'POST',
@@ -72,7 +72,7 @@ export default function PaymentMethodScreen({navigation, route}) {
       }
       const response = await apiAuthFetch("/payment/save_card_v2", options)
 
-      console.log("saving card")
+      //console.log("saving card")
       const json = await response.json()
       if (json.error){
         Alert.alert(
@@ -95,8 +95,8 @@ export default function PaymentMethodScreen({navigation, route}) {
 
     async function deleteCard() {
       setLoadingBt(true)
-      console.log("deleteCard")
-      console.log("borrando tarjeta")
+      //console.log("deleteCard")
+      //console.log("borrando tarjeta")
       const response = await apiAuthFetch("/payment/deleteCard", {method: 'POST'})
       
       if (response.ok){

@@ -8,17 +8,13 @@ import apiAuthFetch from 'src/services/apiAuthFetch';
 import useAuthContext from 'src/hooks/useAuthContext';
 import tr from 'src/language/utils';
 
-
 const minLength = 4;
-
-
 async function postChangePassword({oldPassword, newPassword}) {
     const response = await apiAuthFetch('/auth/changeMyPassword', {method: 'POST', body: JSON.stringify({oldPassword, newPassword})} );
     if (!response.ok) throw Error;
     const json = await response.json();
     return json;
 }
-
 
 export default function WaiterChangePasswordScreen({navigation, route}) {
     
@@ -63,8 +59,6 @@ export default function WaiterChangePasswordScreen({navigation, route}) {
                 value={newPassword}
                 onChangeText={setNewPassword}
             />
-
-            
             <Inputs
                 placeholder={tr("re_pw_nueva")}
                 leftIcon='lock'
@@ -76,8 +70,6 @@ export default function WaiterChangePasswordScreen({navigation, route}) {
                 errorMessage={newPasswordRepeat.length > 0 && newPasswordRepeat !== newPassword ? tr("pw_distinta") : ''}
             
             />
-
-            
             <View style={styles.buttonContainer}>
                 <Buttons
                     title={tr("cambiar_pw")}
@@ -88,13 +80,10 @@ export default function WaiterChangePasswordScreen({navigation, route}) {
                 <View style={{marginTop: 10}} />
                 {newPassword.length < minLength && <Texts h5 center>{tr("min_char_1")}{minLength}{tr("min_char_2")}</Texts>}
             </View>
-            
         </View>
         </ScrollView>
     );
 }
-
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,

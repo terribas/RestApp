@@ -16,7 +16,7 @@ const emailRegex = /\S+@\S+\.\S+/;
 async function postEditUser({name, lastName, email}) {
     const response = await apiAuthFetch('/user', {method: 'PUT', body: JSON.stringify({name, lastName, email})} );
     if (!response.ok) {
-        console.log('RESPUESTA NO OK');
+        //console.log('RESPUESTA NO OK');
         throw Error
     };
     const json = await response.json();
