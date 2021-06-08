@@ -77,6 +77,7 @@ export default {
         
         confirm_order:"Confirmar pedido",
         error_order_detalle:"Error al solicitar el pedido",
+        sin_coste: "Free order",
 
         //Products Screen
         annade_productos_waiter:"Añade productos a la comanda",
@@ -145,7 +146,7 @@ export default {
         recuperar_metodos_pago_error:"Error al recuperar los métodos de pago",
         pagar_tarjeta_1:"Esta a punto de pagar",
         pagar_tarjeta_2:"€ con su tarjeta acabada en ",
-        pagar_tarjeta_3:" ¿Desea confirmar su pedido?",
+        pagar_tarjeta_3:"¿Desea confirmar su pedido?",
         numero_tarjeta:"Numero de tarjeta",
         validez:"Validez",
         cvc:"CVC",

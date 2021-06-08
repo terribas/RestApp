@@ -4,6 +4,7 @@ import CreditCardInputs from 'src/components/CreditCardInputs';
 import CreditCardViews from 'src/components/CreditCardViews';
 import {CheckBox} from 'react-native-elements'
 import Buttons from 'src/components/Buttons';
+import Texts from 'src/components/Texts'
 import apiAuthFetch from 'src/services/apiAuthFetch';
 import useSavedCards from 'src/hooks/useSavedCards';
 import LoadingScreen from 'src/screens/status/LoadingScreen';
@@ -255,10 +256,18 @@ export default function PaymentScreen({navigation, route}) {
       return <View />
   } else if (card.tarjeta){
       return(
-      <View>
-          <Text>{tr("pagar_tarjeta_1")} {total.toFixed(2)}{tr("pagar_tarjeta_2")}{card.paymentMethods.data[0].card.last4} {tr("pagar_tarjeta_3")}</Text>
-          <Buttons title={tr("aceptar")} onPress={handlePayWithSavedCard} loading={paying} ></Buttons>
-          <Buttons title={tr("cancelar")} disabled={paying} onPress={handleCancel} ></Buttons>
+        <View style={styles.container}>
+      <View style={styles.centerContainer}>
+          <View style={{marginTop: 20}} />
+          <Texts h4>{tr("pagar_tarjeta_1")} {total.toFixed(2)} {tr("pagar_tarjeta_2")} {card.paymentMethods.data[0].card.last4}</Texts>
+          <View style={{marginTop: 10}} />
+          <Texts h4 semibold>{tr("pagar_tarjeta_3")}</Texts>
+          
+          <View style={{marginTop: 20}} />
+          <Buttons title={tr("aceptar")} onPress={handlePayWithSavedCard} loading={paying} />
+          <View style={{marginTop: 15}} />
+          <Buttons title={tr("cancelar")} disabled={paying} onPress={handleCancel} type='outline'/>
+      </View>
       </View>
       )
   } else{
@@ -292,5 +301,13 @@ const styles = StyleSheet.create({
     buttonContainer: {
         marginLeft: 16,
         marginRight: 16
+    },
+
+    centerContainer: {
+      flex: 1,
+      backgroundColor: 'white',
+      justifyContent: 'center',
+      paddingLeft: 12,
+      paddingRight: 12
     }
 })

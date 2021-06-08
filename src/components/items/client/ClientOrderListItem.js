@@ -17,7 +17,11 @@ export default function ClientOrderListItem({order}) {
             const day = date.getDate();
             const month = date.getMonth();
             const year = date.getFullYear();
-            return (day < 10 ? '0' : '') + day + '/' + (month < 10 ? '0' : '') + month + '/' + year.toString().substr(-2);
+            const hh = date.getHours();
+            const mm = date.getMinutes();
+            //return (day < 10 ? '0' : '') + day + '/' + (month < 10 ? '0' : '') + month + '/' + year.toString().substr(-2);
+
+            return (day < 10 ? '0' : '') + day + '/' + (month < 10 ? '0' : '') + month + ' ' + (hh < 10 ? '0' : '') + hh + ':' + (mm < 10 ? '0' : '') + mm;
         }
     }
 
@@ -31,7 +35,7 @@ export default function ClientOrderListItem({order}) {
                 </View>
 
                 <View style={styles.dateContainer}>
-                    <Text>{theDate()} </Text>
+                    <Text style={styles.dateText}>{theDate()} </Text>
                     <MaterialCommunityIcons name='calendar-range' style={{fontSize: 20}}/>
                 </View>
                 
@@ -111,11 +115,15 @@ const styles = StyleSheet.create({
     },
 
     dateContainer: {
-        flex: 2,
+        flex: 3,
         flexDirection: 'row',
         alignItems: 'flex-end',
         justifyContent: 'center',
         paddingRight: 8
+    },
+
+    dateText: {
+        fontFamily: 'Montserrat-Medium'
     },
 
     productsContainer: {

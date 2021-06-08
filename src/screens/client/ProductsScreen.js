@@ -69,8 +69,6 @@ export default function ProductsScreen({navigation, route}) {
             const productsCopy = [...products];
             setCart(productsCopy);
             
-            cats.push('Pizzas');
-            cats.push('Meats')
             setCategories(cats);
             setSelectedCategory(cats[0]);
         }

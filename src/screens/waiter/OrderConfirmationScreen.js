@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text, Button, FlatList, StyleSheet} from 'react-native';
 import Buttons from 'src/components/Buttons';
 import {WAITER_TABLES_LIST} from 'src/consts/screens';
@@ -6,6 +6,7 @@ import {useMutation} from 'react-query';
 import apiAuthFetch from 'src/services/apiAuthFetch';
 import ClientCartListItem from 'src/components/items/client/ClientCartListItem';
 import tr from 'src/language/utils';
+import {CheckBox} from 'react-native-elements';
 
 async function postOrder({table, total, products}) {
     const options = {
@@ -19,6 +20,7 @@ async function postOrder({table, total, products}) {
 
 export default function OrderConfirmationScreen({navigation, route}) {
 
+    const [isFree, setIsFree] = useState(false);
     const {cart, total, table} = route.params;
 
     // Order the provided cart by category in order to show it grouped by category
@@ -39,7 +41,7 @@ export default function OrderConfirmationScreen({navigation, route}) {
           }
         })
     function handleOnPress() {  
-        sendOrder({table, total, products: cart});
+        sendOrder({table, total: isFree ? 0 : total, products: cart});
     }
 
     return (
@@ -62,7 +64,12 @@ export default function OrderConfirmationScreen({navigation, route}) {
             </View>
 
             <View style={styles.buttonContainer}>
-                <Buttons onPress={handleOnPress} title={tr("confirm_order")} />
+                <CheckBox
+                    checked={isFree}
+                    onPress={() => {setIsFree(!isFree)} }
+                    title={tr("sin_coste")}
+                />
+                <Buttons onPress={handleOnPress} title={tr("confirm_order") + ' - ' + (isFree ? 0 : total.toFixed(2)) + ' €'}/>
             </View>
         </View>
     );
@@ -93,9 +100,11 @@ const styles = StyleSheet.create({
     },
 
     buttonContainer: {
-        flex: 1,
+        flex: 2.5,
         paddingLeft: 8,
-        paddingRight: 8
-        //backgroundColor: 'green'
+        paddingRight: 8,
+        //backgroundColor: 'green',
+
+        justifyContent: 'flex-start'
     }
 });

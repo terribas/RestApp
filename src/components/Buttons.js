@@ -21,7 +21,7 @@ export default function Buttons({title, onPress, disabled, loading, type, icon})
                     style={{marginRight: 10}}
                 />
             }
-            />
+        />
     );
 }
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Icon } from 'react-native-elements'
 
 
@@ -9,16 +10,33 @@ export default function WaiterTableOrderListItem({order}) {
         a.zone - b.zone
     ));
 
+    const theDate = () => {
+        const date = new Date(order.date);
+        if (date.getTime() > Date.now() - 1000 * 60 * 60) {
+            return Math.round(((Date.now() - date.getTime()) / 1000) / 60) + ' min'
+        } else {
+            const day = date.getDate();
+            const month = date.getMonth();
+            const year = date.getFullYear();
+            const hh = date.getHours();
+            const mm = date.getMinutes();
+
+            return (day < 10 ? '0' : '') + day + '/' + (month < 10 ? '0' : '') + month + ' ' + (hh < 10 ? '0' : '') + hh + ':' + (mm < 10 ? '0' : '') + mm;
+        }
+    }
+
 
     return (
         <View style={[styles.container, order.user.role === 'waiter' ? {backgroundColor: "lightblue"} : {}]}>
             <View style={styles.titleContainer}>
                 <View style={styles.nameContainer}>
                     <Icon name='person'/>
-                    <Text> {order.user.name} {order.user.lastName}</Text>
+                    <Text style={styles.nameText}> {order.user.name} {order.user.lastName}</Text>
                 </View>
 
                 <View style={styles.dateContainer}>
+                    <Text style={styles.dateText}>{theDate()} </Text>
+                    <MaterialCommunityIcons name='calendar-range' style={{fontSize: 20}}/>
                 </View>
                 
             </View>
@@ -91,9 +109,22 @@ const styles = StyleSheet.create({
         paddingLeft: 6
     },
 
-    dateContainer: {
-        flex: 3
+    nameText: {
+        fontFamily: 'Montserrat-Semibold'
     },
+
+    dateContainer: {
+        flex: 3,
+        flexDirection: 'row',
+        alignItems: 'flex-end',
+        justifyContent: 'center',
+        paddingRight: 8,
+    },
+
+    dateText: {
+        fontFamily: 'Montserrat-Medium'
+    },
+
 
     productsContainer: {
         height: undefined

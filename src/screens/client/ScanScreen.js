@@ -13,7 +13,11 @@ export default function ScanScreen({navigation, route}) {
 
     function handleOnPress() {
         navigation.navigate(CLIENT_PRODUCTS, {
-            table: '60a53cdb89603c02b4d1627f'
+            //table: '60a53cdb89603c02b4d1627f'  //Mesa 5
+            //table: '60a53ccf89603c02b4d1627d' //Mesa 3
+            //table: '60a53cfe89603c02b4d16282' //Mesa 8
+            //table: '60a53d0789603c02b4d16285' //Mesa 11
+            table: '60a53ce189603c02b4d16281' //Mesa 7
         });
     }
 

@@ -10,7 +10,7 @@ export default {
         ok:"OK",
         cargando:'Loading...',
         mesa:"Table",
-        carta:"Card",
+        carta:"Menu",
         confirmar_pedido:"Confirm order",
         pagar_lc:"Pay",
         registro:'Register',
@@ -76,7 +76,7 @@ export default {
         pantalla_principal: "Main Screen",
         confirm_order:"Confirm order",
         error_order_detalle:"Error sending the order",
-
+        sin_coste: "Free order",
 
         //Products Screen
         annade_productos_waiter:"Add products to the order",
@@ -145,8 +145,8 @@ export default {
         recuperar_metodos_pago_error:"Error retrieving payment method",
         numero_tarjeta:"Card number",
         pagar_tarjeta_1:"You are about to pay",
-        pagar_tarjeta_2:"€ with your card ended in ",
-        pagar_tarjeta_3:". Want to confirm order?",
+        pagar_tarjeta_2:"€ with your card ended in",
+        pagar_tarjeta_3:"Do you want to confirm your order?",
         validez:"Expiry",
         cvc:"CVC",
         numero_placeholder:"4242 4242 4242 4242",
