@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     },
 
     titleContainer: {
-        flex: 1.2,
+        flex: 1.5,
         //backgroundColor: 'red',
         justifyContent: 'center',
         paddingLeft: 8
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     },
 
     buttonContainer: {
-        flex: 1,
+        flex: 1.5,
         paddingLeft: 8,
         paddingRight: 8
         //backgroundColor: 'green'

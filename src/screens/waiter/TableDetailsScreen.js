@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     },
 
     buttonsContainer: {
-        flex: 1,
+        flex: 1.3,
         flexDirection: 'row',
         alignItems: 'center'
     },

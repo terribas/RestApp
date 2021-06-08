@@ -128,6 +128,8 @@ export default {
 
         //Scan Screen
         escanea_qr: "Scan the QR Code from your table",
+        permission_title:"Camera Permission required",
+        permission_message:"Camera Permission is needed in order to scan QR Code.",
 
         //Products Screen
 

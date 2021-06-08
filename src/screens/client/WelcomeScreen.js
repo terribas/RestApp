@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     },
 
     bottomContainer: {
-        flex: 1,
+        flex: 1.2,
         paddingLeft: 10,
         paddingRight: 10,
         justifyContent: 'center',

@@ -129,6 +129,8 @@ export default {
 
         //Scan Screen
         escanea_qr: "Escanea el código QR de tu mesa",
+        permission_title:"Se requiere permiso de camara",
+        permission_message:"Para poder escanear el codigo QR es necesario acceder a la camara",
 
         //Products Screen
 

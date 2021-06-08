@@ -35,6 +35,8 @@ export default function ScanScreen({navigation, route}) {
                 onRead={onRead}
                 reactivateTimeout={5000}
                 reactivate={true}   
+                permissionDialogTitle={tr("permission_title")}
+                permissionDialogMessage={tr("permission_message")}
                 //containerStyle={{height:300}}
             />
         

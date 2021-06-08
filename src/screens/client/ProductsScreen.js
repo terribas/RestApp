@@ -169,13 +169,13 @@ const styles = StyleSheet.create({
     },
     products: {
         //marginTop: 10,
-        flex: 12,
+        flex: 10,
         marginBottom: 8,
         //backgroundColor: 'red',
         
     },
     bottomContainer: {
-        flex: 1,
+        flex: 1.5,
         paddingLeft: 8,
         paddingRight: 8,
         //backgroundColor: 'red',
