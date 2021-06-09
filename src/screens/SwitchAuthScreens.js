@@ -15,7 +15,7 @@ export default function SwitchAuthScreens(props) {
     if (loggedState === LOADING) {
         return (
             <SafeAreaView>
-                <LoadingScreen message={tr("loading")} />
+                <LoadingScreen message={tr("cargando")} />
             </SafeAreaView>
         );
     } else if (loggedState === CLIENT_LOGGED_IN){

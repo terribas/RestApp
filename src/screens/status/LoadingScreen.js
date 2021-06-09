@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, View, Text, ActivityIndicator} from 'react-native';
-
+import tr from 'src/language/utils'
 export default function LoadingScreen({navigation, route, message}) {
     return (
         <View style={styles.container}>

@@ -75,7 +75,7 @@ export default {
         
         confirm_order:"Confirmar pedido",
         error_order_detalle:"Error al solicitar el pedido",
-        sin_coste: "Free order",
+        sin_coste: "Sin coste",
 
         //Products Screen
         annade_productos_waiter:"Añade productos a la comanda",
