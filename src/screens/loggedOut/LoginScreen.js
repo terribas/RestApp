@@ -17,9 +17,12 @@ export default function LoginScreen({navigation, route}) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const {clientLogin, waiterLogin} = useAuthContext();
+    const [isLoading, setIsLoading] = useState(false);
+    
     //  Se conecta al servidor.
     async function handleOnLoginPress() {
-
+        
+        setIsLoading(true);
         const postData = {email, password};
 
         const options = {
@@ -32,7 +35,7 @@ export default function LoginScreen({navigation, route}) {
         }
         try {
             const response = await fetch(`${API_URL}/auth/login`, options);
-
+            setIsLoading(false);
             if (!response.ok) {
                 Alert.alert(tr("user_pw_invalido"));
             } else {
@@ -82,6 +85,7 @@ export default function LoginScreen({navigation, route}) {
                     <Buttons
                         title={tr("iniciar_sesion")}
                         onPress={handleOnLoginPress}
+                        loading={isLoading}
                     />
                     <View style={{marginTop: 15}} />
                     <Texts h5 center>{tr("sin_cuenta")}</Texts>

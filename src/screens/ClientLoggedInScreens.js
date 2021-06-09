@@ -4,7 +4,6 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import * as SCREEN from 'src/consts/screens';
 import WelcomeScreen from 'src/screens/client/WelcomeScreen';
 import ScanScreen from 'src/screens/client/ScanScreen';
-//import CategoriesScreen from 'src/screens/client/CategoriesScreen';
 import ProductsScreen from 'src/screens/client/ProductsScreen';
 import OrderConfirmationScreen from 'src/screens/client/OrderConfirmationScreen';
 import PaymentScreen from 'src/screens/client/PaymentScreen';

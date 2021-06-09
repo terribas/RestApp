@@ -135,8 +135,6 @@ export default function ProductsScreen({navigation, route}) {
                     )}
                     keyExtractor={item => item.id}
                     style={styles.products}
-                    
-                    //numColumns={2}
                 />
             </View>
 
@@ -161,24 +159,19 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'white'
-        //alignItems: 'center',
     },
     categories: {
         marginTop: 10,
         flex: 1
     },
     products: {
-        //marginTop: 10,
         flex: 10,
-        marginBottom: 8,
-        //backgroundColor: 'red',
-        
+        marginBottom: 3,        
     },
     bottomContainer: {
-        flex: 1.5,
+        flex: 1.3,
         paddingLeft: 8,
         paddingRight: 8,
-        //backgroundColor: 'red',
         justifyContent: 'center',
     }
 });
