@@ -100,11 +100,9 @@ const styles = StyleSheet.create({
     },
 
     buttonContainer: {
-        flex: 4.5,
+        flex: 2.8,
         paddingLeft: 8,
         paddingRight: 8,
-        //backgroundColor: 'green',
-
         justifyContent: 'flex-start'
     }
 });

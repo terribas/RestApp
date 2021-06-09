@@ -154,9 +154,9 @@ const styles = StyleSheet.create({
         
     },
     bottomContainer: {
-        flex: 1.8,
+        flex: 1.2,
         paddingLeft: 8,
-        paddingRight: 8
+        paddingRight: 8,
         //justifyContent: 'flex-end'
     }
 });

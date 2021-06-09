@@ -3,7 +3,6 @@ import apiAuthFetch from 'src/services/apiAuthFetch';
 
 const GET_MY_ORDERS = 'GET_MY_ORDERS';
 
-
 export default function useMyOrders() {
 
     async function fetchMyOrders() {
@@ -13,4 +12,7 @@ export default function useMyOrders() {
     }
 
     return useQuery(GET_MY_ORDERS, fetchMyOrders, {cacheTime: 0});
+
 }
+
+
